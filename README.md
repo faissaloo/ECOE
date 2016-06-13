@@ -15,7 +15,9 @@ Arrows = scroll/move
 New event = E
 New action = A
 Move action down = R
-Move action up = N
+Move action up = N  
+ESC = Toolbar/exit window  
+  
 Compiling  
 ==  
 To install use:  
