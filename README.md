@@ -3,6 +3,10 @@ ECOE (ENIGMA C Object Editor)
 ECOE is a fast and lightweight linux terminal based object editor for .object.GMX files.  
 ECOE depends on libxml2 and ncurses (with widechar support).  
   
+![Screenshot](/misc/images/Screenshot1.png)  
+![Screenshot](/misc/images/Screenshot2.png)  
+![Screenshot](/misc/images/Screenshot3.png)  
+  
 Compiling  
 ==  
 To install use:  
