@@ -6,7 +6,7 @@ all:
 install:
 	$(CC) -o ecoe `xml2-config --cflags` ./src/main.c ./src/gm_obj_lib.c ./src/lgl_lib.c `xml2-config --libs` -lncursesw -O3
 	mv ecoe $(INSTALL_PATH)/bin/ecoe
-	mv lib $(INSTALL_PATH)/bin/lib
+	cp -r lib $(INSTALL_PATH)/bin/lib
 debug:
 	$(CC) -o ecoe -Wall `xml2-config --cflags` ./src/main.c ./src/gm_obj_lib.c ./src/lgl_lib.c `xml2-config --libs` -lncursesw -g
 	gdb -tui ecoe
