@@ -43,7 +43,7 @@ make memcheck
 Notes  
 ==  
 1. ECOE allows you to have more than 11 alarms however, some other editors and implementations of GML may refuse to compile it or crash.
-2. Settings are in ./settings.h because they won't need to be frequently changed so it's not currently worth my time to create a config system.
+2. Settings are in ./src/settings.h because they won't need to be frequently changed so it's not currently worth my time to create a config system.
   
 Licence  
 ==
