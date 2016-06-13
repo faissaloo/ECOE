@@ -7,6 +7,15 @@ ECOE depends on libxml2 and ncurses (with widechar support).
 ![Screenshot](/misc/images/Screenshot2.png)  
 ![Screenshot](/misc/images/Screenshot3.png)  
   
+Controls
+==  
+Enter = select  
+Tab = change sections
+Arrows = scroll/move  
+New event = E
+New action = A
+Move action down = R
+Move action up = N
 Compiling  
 ==  
 To install use:  
