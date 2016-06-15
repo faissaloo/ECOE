@@ -18,6 +18,7 @@ Color      = 13
 Timeline   = 14
 Font String= 15
 */
+
 struct lgl_argument_meta
 {
   unsigned char *caption; //Pointer for a malloc request for memory for a string
@@ -39,6 +40,7 @@ struct lgl_argument_meta
 9 	-Separator
 10 	-Label
 */
+
 struct lgl_action_meta
 {
   //This is the informal name shown to the user

@@ -52,33 +52,84 @@ int count_names(char *array[],int size)
   return total;
 }
 
+enum event_kind
+{
+  event_create = 0,
+  event_destroy = 1,
+  event_alarm = 2,
+  event_step = 3,
+  event_collision = 4,
+  event_key = 5,
+  event_mouse = 6,
+  event_other = 7,
+  event_draw = 8,
+  event_key_pressed = 9,
+  event_key_released = 10,
+};
+//All the arg kinds
+enum arg_kind
+{
+  arg_expression = 0,
+  arg_string = 1,
+  arg_both = 2,
+  arg_boolean = 3,
+  arg_menu = 4,
+  arg_sprite = 5,
+  arg_sound = 6,
+  arg_background = 7,
+  arg_path = 8,
+  arg_script = 9,
+  arg_object = 10,
+  arg_room = 11,
+  arg_font = 12,
+  arg_color = 13,
+  arg_timeline = 14,
+  arg_font_str = 15,
+};
+
+//All the action kinds
+enum action_kind
+{
+  action_normal = 0,
+  action_group_start = 1,
+  action_group_end = 2,
+  action_else = 3,
+  action_exit = 4,
+  action_repeat = 5,
+  action_var = 6,
+  action_code = 7,
+  action_placeholder = 8,
+  action_seperator = 9,
+  action_label = 10,
+};
+
 //To initialise all the names+icons we'll use
 void init_names()
 {
   //Informal type names
-  event_type_name[0] =  "☀  Create";
-  event_type_name[1] =  "♻  Destroy";
-  event_type_name[2] =  "⌛  Alarm";
-  event_type_name[3] =  "🚶  Step";
-  event_type_name[4] =  "↸  Collision";
-  event_type_name[5] =  "⌨  Key";
-  event_type_name[6] =  "┬⃣  Mouse";
-  event_type_name[7] =  "…  Other";
-  event_type_name[8] =  "✏  Draw";
-  event_type_name[9] =  "⌨  Pressed";
-  event_type_name[10] = "⌨  Released";
+  event_type_name[event_create] =  "☀  Create";
+  event_type_name[event_destroy] =  "♻  Destroy";
+  event_type_name[event_alarm] =  "⌛  Alarm";
+  event_type_name[event_step] =  "🚶  Step";
+  event_type_name[event_collision] =  "↸  Collision";
+  event_type_name[event_key] =  "⌨  Key";
+  event_type_name[event_mouse] =  "┬⃣  Mouse";
+  event_type_name[event_other] =  "…  Other";
+  event_type_name[event_draw] =  "✏  Draw";
+  event_type_name[event_key_pressed] =  "⌨  Pressed";
+  event_type_name[event_key_released] = "⌨  Released";
   //Informal enumb names
-  event_enumb_name[0] =  NULL;
-  event_enumb_name[1] =  NULL;
-  event_enumb_name[2] =  "Alarm number:"; //note: >11 unsupported by many implementations, put this in documentation
-  event_enumb_name[3] =  "Step type:";
-  event_enumb_name[4] =  "Object:";
-  event_enumb_name[5] =  "Key number:";
-  event_enumb_name[6] =  "Mouse button:";
-  event_enumb_name[7] =  "Other event:";
-  event_enumb_name[8] =  "Draw type:";
-  event_enumb_name[9] =  "Key number:";
-  event_enumb_name[10] = "Key number:";
+  event_enumb_name[event_create] =  NULL;
+  event_enumb_name[event_destroy] =  NULL;
+  event_enumb_name[event_alarm] =  "Alarm number:"; //note: >11 unsupported by many implementations, put this in documentation
+  event_enumb_name[event_step] =  "Step type:";
+  event_enumb_name[event_collision] =  "Object:";
+  event_enumb_name[event_key] =  "Key number:";
+  event_enumb_name[event_mouse] =  "Mouse button:";
+  event_enumb_name[event_other] =  "Other event:";
+  event_enumb_name[event_draw] =  "Draw type:";
+  event_enumb_name[event_key_pressed] =  "Key number:";
+  event_enumb_name[event_key_released] = "Key number:";
   //Informal enumb names for other aka [7]
   other_event_type_name[0] = "Outside Room";
   other_event_type_name[1] = "Intersect Boundary";
@@ -581,25 +632,25 @@ int edit_event_menu(struct gm_event *event)
     {
       switch (event->eventtype)
       {
-        case 3:
+        case event_step:
           choice_array=step_event_type_name;
           array_range=sizeof(step_event_type_name) / sizeof(step_event_type_name[0]);
           break;
-        case 5:
-        case 9:
-        case 10:
+        case event_key:
+        case event_key_pressed:
+        case event_key_released:
           choice_array=keys_names;
           array_range=sizeof(keys_names) / sizeof(keys_names[0]);
           break;
-        case 6:
+        case event_mouse:
           choice_array=mouse_button_names;
           array_range=sizeof(mouse_button_names) / sizeof(mouse_button_names[0]);
           break;
-        case 7:
+        case event_other:
           choice_array=other_event_type_name;
           array_range=sizeof(other_event_type_name) / sizeof(other_event_type_name[0]);
           break;
-        case 8:
+        case event_draw:
           choice_array=draw_event_type_name;
           array_range=sizeof(draw_event_type_name) / sizeof(draw_event_type_name[0]);
           break;
@@ -629,7 +680,7 @@ int edit_event_menu(struct gm_event *event)
       }
       if (last_key=='\n')
       {
-        if (event->eventtype==8)
+        if (event->eventtype==event_draw)
         {
           event->enumb=event_draw_index_to_enumb(array_index);
         }
@@ -639,7 +690,7 @@ int edit_event_menu(struct gm_event *event)
         }
       }
     }
-    else if (event->eventtype==4)
+    else if (event->eventtype==event_collision)
     {
       while (last_key!=27)
       {
@@ -679,7 +730,7 @@ int edit_action_menu(struct gm_action *selected_action)
   if (curr_action_meta!=NULL)
   {
     //If it's only code we want it to open in our favourite code editor
-    if (curr_action_meta->kind==7)
+    if (curr_action_meta->kind==action_code)
     {
       char *temp_file_name;
       char *command;
@@ -882,7 +933,7 @@ int new_action_menu(struct gm_object *obj, int selected_event, int selected_acti
     last_key=getch();
   }
   action_to_add_meta=*get_action_meta(selected_id);
-  if ((last_key=='\n')&(action_to_add_meta.kind!=9)&(action_to_add_meta.kind!=10))
+  if ((last_key=='\n')&(action_to_add_meta.kind!=action_seperator)&(action_to_add_meta.kind!=action_label))
   {
     //Make space in the array for the new action, selected_action++
     new_action(obj->events[selected_event], selected_action);
@@ -954,32 +1005,32 @@ void draw_events_and_actions(struct gm_object *obj, int event_scope, int action_
 
     switch (obj->events[i]->eventtype)
     {
-      case 2:
+      case event_alarm:
         mvprintw((i-event_scope)+2,19,"│⌛  Alarm  %i",obj->events[i]->enumb);
         break;
-      case 3:
+      case event_step:
         mvprintw((i-event_scope)+2, 19,"│🚶  %s",step_event_type_name[obj->events[i]->enumb]);
         break;
-      case 4:
+      case event_collision:
         mvprintw((i-event_scope)+2, 19,"│↸  %.18s",obj->events[i]->ename);
         break;
-      case 5:
+      case event_key:
         mvprintw((i-event_scope)+2, 19,"│️ ⃣️  %s", keys_names[obj->events[i]->enumb]);
         break;
-      case 6:
+      case event_mouse:
         mvprintw((i-event_scope)+2, 19,"│️┬⃣️  %s", mouse_button_names[obj->events[i]->enumb]);
         break;
-      case 7:
+      case event_other:
         mvprintw((i-event_scope)+2, 19,"│…  %s",other_event_type_name[obj->events[i]->enumb]);
         break;
-      case 8:
+      case event_draw:
         mvprintw((i-event_scope)+2, 19,"│️✏  %s", draw_event_type_name[event_draw_enumb_to_index(obj->events[i]->enumb)]);
         break;
-      case 9:
-        mvprintw((i-event_scope)+2, 19,"│️⬆️⃣️  %s", keys_names[obj->events[i]->enumb]);
-        break;
-      case 10:
+      case event_key_pressed:
         mvprintw((i-event_scope)+2, 19,"│️⬇️⃣️  %s", keys_names[obj->events[i]->enumb]);
+        break;
+      case event_key_released:
+        mvprintw((i-event_scope)+2, 19,"│️⬆️⃣️  %s", keys_names[obj->events[i]->enumb]);
         break;
       default:
         mvprintw((i-event_scope)+2, 19,"│%s",event_type_name[obj->events[i]->eventtype]);
