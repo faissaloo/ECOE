@@ -51,6 +51,199 @@ int count_names(char *array[],int size)
   }
   return total;
 }
+
+//To initialise all the names+icons we'll use
+void init_names()
+{
+  //Informal type names
+  event_type_name[0] =  "☀  Create";
+  event_type_name[1] =  "♻  Destroy";
+  event_type_name[2] =  "⌛  Alarm";
+  event_type_name[3] =  "🚶  Step";
+  event_type_name[4] =  "↸  Collision";
+  event_type_name[5] =  "⌨  Key";
+  event_type_name[6] =  "┬⃣  Mouse";
+  event_type_name[7] =  "…  Other";
+  event_type_name[8] =  "✏  Draw";
+  event_type_name[9] =  "⌨  Pressed";
+  event_type_name[10] = "⌨  Released";
+  //Informal enumb names
+  event_enumb_name[0] =  NULL;
+  event_enumb_name[1] =  NULL;
+  event_enumb_name[2] =  "Alarm number:"; //note: >11 unsupported by many implementations, put this in documentation
+  event_enumb_name[3] =  "Step type:";
+  event_enumb_name[4] =  "Object:";
+  event_enumb_name[5] =  "Key number:";
+  event_enumb_name[6] =  "Mouse button:";
+  event_enumb_name[7] =  "Other event:";
+  event_enumb_name[8] =  "Draw type:";
+  event_enumb_name[9] =  "Key number:";
+  event_enumb_name[10] = "Key number:";
+  //Informal enumb names for other aka [7]
+  other_event_type_name[0] = "Outside Room";
+  other_event_type_name[1] = "Intersect Boundary";
+  other_event_type_name[2] = "Game Start";
+  other_event_type_name[3] = "Game End";
+  other_event_type_name[4] = "Room Start";
+  other_event_type_name[5] = "Room End";
+  other_event_type_name[6] = "Out of lives";
+  other_event_type_name[7] = "Animation End";
+  other_event_type_name[8] = "End of Path";
+  other_event_type_name[9] = "Out of Health";
+  other_event_type_name[10] = "User Defined 0";
+  other_event_type_name[11] = "User Defined 1";
+  other_event_type_name[12] = "User Defined 2";
+  other_event_type_name[13] = "User Defined 3";
+  other_event_type_name[14] = "User Defined 4";
+  other_event_type_name[15] = "User Defined 5";
+  other_event_type_name[16] = "User Defined 6";
+  other_event_type_name[17] = "User Defined 7";
+  other_event_type_name[18] = "User Defined 8";
+  other_event_type_name[19] = "User Defined 9";
+  other_event_type_name[20] = "User Defined 10";
+  other_event_type_name[21] = "User Defined 11";
+  other_event_type_name[22] = "User Defined 12";
+  other_event_type_name[23] = "User Defined 13";
+  other_event_type_name[24] = "User Defined 14";
+  other_event_type_name[25] = "User Defined 15";
+  //They skip to 30 here
+  other_event_type_name[30] = "Close Button";
+  //Then to 40
+  other_event_type_name[40] = "Outside View 0";
+  other_event_type_name[41] = "Outside View 1";
+  other_event_type_name[42] = "Outside View 2";
+  other_event_type_name[43] = "Outside View 3";
+  other_event_type_name[44] = "Outside View 4";
+  other_event_type_name[46] = "Outside View 5";
+  other_event_type_name[47] = "Outside View 6";
+  other_event_type_name[48] = "Outside View 7";
+  //Skips to 50 here
+  other_event_type_name[50] = "Boundary View 0";
+  other_event_type_name[51] = "Boundary View 1";
+  other_event_type_name[52] = "Boundary View 2";
+  other_event_type_name[53] = "Boundary View 3";
+  other_event_type_name[54] = "Boundary View 4";
+  other_event_type_name[55] = "Boundary View 5";
+  other_event_type_name[56] = "Boundary View 6";
+  other_event_type_name[57] = "Boundary View 7";
+  //Skips to 60 here
+  other_event_type_name[60] = "Image Loaded";
+  other_event_type_name[61] = "Sound Loaded";
+  other_event_type_name[62] = "HTTP";
+  other_event_type_name[63] = "Dialog";
+  //Skips, probably because yoyo decided to throw the new draw events in 64 and 65
+  other_event_type_name[66] = "IAP";
+  other_event_type_name[67] = "Cloud";
+  other_event_type_name[68] = "Networking";
+  other_event_type_name[69] = "Steam";
+  other_event_type_name[70] = "Social";
+  //Step event Types
+  step_event_type_name[0] = "Step";
+  step_event_type_name[1] = "Pre-step";
+  step_event_type_name[2] = "Post-step";
+  //Draw event Types
+  draw_event_type_name[0] = "Draw";
+  //Because we put them in the other_event_type_name array
+  draw_event_type_name[1] = "GUI"; //In the GMX format this is enumb 64 of draw
+  draw_event_type_name[2] = "Resize"; //In the GMX format this is enumb 65 of draw
+  //Mouse event types
+  mouse_button_names[0] = "Left";
+  mouse_button_names[1] = "Right";
+  mouse_button_names[2] = "Middle";
+  mouse_button_names[3] = "None";
+  mouse_button_names[4] = "Left Pressed";
+  mouse_button_names[5] = "Right Pressed";
+  mouse_button_names[6] = "Middle Pressed";
+  mouse_button_names[7] = "Left Released";
+  mouse_button_names[8] = "Right Released";
+  mouse_button_names[9] = "Middle Released";
+  mouse_button_names[10] = "Enters";
+  mouse_button_names[11] = "Leaves";
+  mouse_button_names[16] = "Gamepad 1 Left";
+  mouse_button_names[17] = "Gamepad 1 Right";
+  mouse_button_names[18] = "Gamepad 1 Up";
+  mouse_button_names[19] = "Gamepad 1 Down";
+  mouse_button_names[21] = "Gamepad 1 Button 1";
+  mouse_button_names[22] = "Gamepad 1 Button 2";
+  mouse_button_names[23] = "Gamepad 1 Button 3";
+  mouse_button_names[24] = "Gamepad 1 Button 4";
+  mouse_button_names[25] = "Gamepad 1 Button 5";
+  mouse_button_names[26] = "Gamepad 1 Button 6";
+  mouse_button_names[27] = "Gamepad 1 Button 7";
+  mouse_button_names[28] = "Gamepad 1 Button 8";
+  mouse_button_names[31] = "Gamepad 2 Left";
+  mouse_button_names[32] = "Gamepad 2 Right";
+  mouse_button_names[33] = "Gamepad 2 Up";
+  mouse_button_names[34] = "Gamepad 2 Down";
+  mouse_button_names[36] = "Gamepad 2 Button 1";
+  mouse_button_names[37] = "Gamepad 2 Button 2";
+  mouse_button_names[38] = "Gamepad 2 Button 3";
+  mouse_button_names[39] = "Gamepad 2 Button 4";
+  mouse_button_names[40] = "Gamepad 2 Button 5";
+  mouse_button_names[41] = "Gamepad 2 Button 6";
+  mouse_button_names[42] = "Gamepad 2 Button 7";
+  mouse_button_names[43] = "Gamepad 2 Button 8";
+  mouse_button_names[50] = "Global Left";
+  mouse_button_names[51] = "Global Right";
+  mouse_button_names[52] = "Global Middle";
+  mouse_button_names[53] = "Global Left Pressed";
+  mouse_button_names[54] = "Global Right Pressed";
+  mouse_button_names[55] = "Global Middle Pressed";
+  mouse_button_names[56] = "Global Left Released";
+  mouse_button_names[57] = "Global Right Released";
+  mouse_button_names[58] = "Global Middle Released";
+  mouse_button_names[61] = "Wheel Up";
+  mouse_button_names[62] = "Wheel Down";
+  //Keys event types
+  //https://github.com/IsmAvatar/LateralGM/blob/220dc7da6dc358bde0d691f52100c852283831a3/org/lateralgm/resources/sub/Event.java
+  keys_names[0] = "No key";
+  keys_names[1] = "Any key";
+  keys_names[13] = "Enter";
+  keys_names[16] = "Shift";
+  keys_names[17] = "Control";
+  keys_names[18] = "Alt";
+  keys_names[32] = "Space";
+  keys_names[37] = "Left";
+  keys_names[38] = "Up";
+  keys_names[39] = "Right";
+  keys_names[40] = "Down";
+  keys_names[48] = "0";
+  keys_names[49] = "1";
+  keys_names[50] = "2";
+  keys_names[51] = "3";
+  keys_names[52] = "4";
+  keys_names[53] = "5";
+  keys_names[54] = "6";
+  keys_names[55] = "7";
+  keys_names[56] = "8";
+  keys_names[57] = "9";
+  keys_names[65] = "A";
+  keys_names[66] = "B";
+  keys_names[67] = "C";
+  keys_names[68] = "D";
+  keys_names[69] = "E";
+  keys_names[70] = "F";
+  keys_names[71] = "G";
+  keys_names[72] = "H";
+  keys_names[73] = "I";
+  keys_names[74] = "J";
+  keys_names[75] = "K";
+  keys_names[76] = "L";
+  keys_names[77] = "M";
+  keys_names[78] = "N";
+  keys_names[79] = "O";
+  keys_names[80] = "P";
+  keys_names[81] = "Q";
+  keys_names[82] = "R";
+  keys_names[83] = "S";
+  keys_names[84] = "T";
+  keys_names[85] = "U";
+  keys_names[86] = "V";
+  keys_names[87] = "W";
+  keys_names[88] = "X";
+  keys_names[89] = "Y";
+  keys_names[90] = "Z";
+}
 //Converts an argument kind to a textbox character entry limit
 int arg_to_textbox_limit[16]={0,0,0,0,0,1,1,1,1,1,1,1,1,2,1,1};
 //From: https://stackoverflow.com/questions/1306727/way-to-get-number-of-digits-in-an-int
@@ -369,7 +562,7 @@ int draw_window_border(WINDOW *window, char *title)
   return 1;
 }
 
-int edit_event(struct gm_event *event)
+int edit_event_menu(struct gm_event *event)
 {
   WINDOW *event_window;
   int last_key=0;
@@ -475,7 +668,7 @@ int edit_event(struct gm_event *event)
   clear();
 }
 
-int edit_action(struct gm_action *selected_action)
+int edit_action_menu(struct gm_action *selected_action)
 {
   WINDOW *action_window;
   int last_key=0;
@@ -595,198 +788,346 @@ int edit_action(struct gm_action *selected_action)
   }
 }
 
+int new_event_menu(struct gm_object *obj,int *selected_event)
+{
+  int selected_event_to_add=0;
+  int event_scope_to_add=0;
+  int last_key=0;
+  int i;
+  WINDOW *new_event_window;
+  new_event_window=newwin(terminal_height-4, terminal_width-4, 2,2);
+  while ((last_key!='\n')&(last_key!=27))
+  {
+    wclear(new_event_window);
+    handle_menu_ctrls(last_key,&selected_event_to_add,&event_scope_to_add,11,terminal_height-7);
+    for (i=event_scope_to_add;(i<11)&(i<event_scope_to_add+terminal_height-4);i++)
+    {
+      if (i==selected_event_to_add)
+      {
+        wattron(new_event_window,A_REVERSE);
+      }
+      mvwaddstr(new_event_window,1+i-event_scope_to_add, 2, event_type_name[i]);
+      wattroff(new_event_window,A_REVERSE);
+    }
+    draw_window_border(new_event_window, "New Event");
+    wrefresh(new_event_window);
+    last_key=getch();
+  }
+  if (last_key=='\n')
+  {
+    new_event(obj,selected_event_to_add);
+    edit_event_menu(obj->events[obj->event_count-1]);
+    *selected_event=obj->event_count-1;
+    return true;
+  }
+  else
+  {
+    clear();
+    return false;
+  }
+}
+
+int new_action_menu(struct gm_object *obj, int selected_event, int selected_action, int *section)
+{
+  struct lgl_action_meta action_to_add_meta;
+  int selected_id;
+  int selected_action_to_add=0;
+  int action_scope_to_add=0;
+  int i,ii;
+  WINDOW *new_action_window;
+  new_action_window=newwin(terminal_height-4, terminal_width-4, 2,2);
+  struct lgl_action_meta *action_list;
+  int last_key=0;
+  while ((last_key!=27)&(last_key!='\n'))
+  {
+    wclear(new_action_window);
+    //Controls
+    handle_menu_ctrls(last_key,&selected_action_to_add,&action_scope_to_add,lgl_action_count,terminal_height-7);
+    for (action_list=action_meta_dict, i = 0;(action_list != NULL)&(i-action_scope_to_add<terminal_height-6)&
+      (i<action_scope_to_add+terminal_height - 6);
+      action_list=action_list->hh.next, i++)
+    {
+      //Only draw if it's within the scope
+      if ((i+1>action_scope_to_add))
+      {
+        if (i==selected_action_to_add)
+        {
+          selected_id=action_list->id;
+          wattron(new_action_window,A_REVERSE);
+        }
+        //If the kind is 10 it's a label, not an actual action
+        if (action_list->kind==10)
+        {
+          wattron(new_action_window,A_BOLD);
+          mvwprintw(new_action_window,i-action_scope_to_add+1,2,"[%s]",action_list->name);
+          wattroff(new_action_window,A_BOLD);
+        }
+        //If the kind is 9 it's a separator
+        else if (action_list->kind==9)
+        {
+          for (ii=1;ii<terminal_width-5;ii++)
+          {
+            mvwaddstr(new_action_window,i-action_scope_to_add+1,ii,"─");
+          }
+        }
+        else
+        {
+          mvwaddstr(new_action_window,i-action_scope_to_add+1,2,action_list->name);
+        }
+        wattroff(new_action_window,A_REVERSE);
+      }
+    }
+    draw_window_border(new_action_window, "New action");
+    wrefresh(new_action_window);
+    last_key=getch();
+  }
+  action_to_add_meta=*get_action_meta(selected_id);
+  if ((last_key=='\n')&(action_to_add_meta.kind!=9)&(action_to_add_meta.kind!=10))
+  {
+    //Make space in the array for the new action, selected_action++
+    new_action(obj->events[selected_event], selected_action);
+    //Copy stuff from template
+    obj->events[selected_event]->actions[selected_action]->libid=action_to_add_meta.libid;
+    obj->events[selected_event]->actions[selected_action]->id=action_to_add_meta.id;
+    obj->events[selected_event]->actions[selected_action]->kind=action_to_add_meta.kind;
+    obj->events[selected_event]->actions[selected_action]->userelative=action_to_add_meta.userelative;
+    obj->events[selected_event]->actions[selected_action]->useapplyto=action_to_add_meta.useapplyto;
+    obj->events[selected_event]->actions[selected_action]->isquestion=action_to_add_meta.isquestion;
+    obj->events[selected_event]->actions[selected_action]->exetype=action_to_add_meta.exetype;
+    obj->events[selected_event]->actions[selected_action]->functionname=action_to_add_meta.functionname;
+    obj->events[selected_event]->actions[selected_action]->codestring=action_to_add_meta.codestring;
+    //Because this won't be filled by the template, this will always be the default anyways
+    obj->events[selected_event]->actions[selected_action]->whoName = malloc((strlen("self")+1)*sizeof(char));
+    strcpy(obj->events[selected_event]->actions[selected_action]->whoName,"self");
+    //
+    obj->events[selected_event]->actions[selected_action]->arg_count=action_to_add_meta.arg_count;
+    obj->events[selected_event]->actions[selected_action]->arguments = calloc(obj->events[selected_event]->actions[selected_action]->arg_count, sizeof(struct gm_argument));
+    for (i=0;i<obj->events[selected_event]->actions[selected_action]->arg_count;i++)
+    {
+      struct gm_argument *curr_arg = calloc(1,sizeof(struct gm_argument));
+      curr_arg->kind=action_to_add_meta.arguments[i]->kind;
+      obj->events[selected_event]->actions[selected_action]->arguments[i]=curr_arg;
+    }
+    //Add an action created from the get_action_meta(ID RETURNED FROM BEFORE)
+    edit_action_menu(obj->events[selected_event]->actions[selected_action]);
+    *section=2;
+  }
+  clear();
+}
+
+void draw_events_and_actions(struct gm_object *obj, int event_scope, int action_scope, int selected_event, int selected_action, int section)
+{
+  int i, ii;
+  for (i=event_scope;i<obj->event_count;i++)
+  {
+    if (selected_event==i)
+    {
+      int ii;
+      for (ii=action_scope;ii<obj->events[i]->action_count;ii++)
+      {
+        struct lgl_action_meta *curr_action_meta=get_action_meta(obj->events[i]->actions[ii]->id);
+        if ((selected_action==ii)&(section==2))
+        {
+          attron(A_REVERSE);
+        }
+        //Clear the space so that there aren't characters left over from before
+        mvprintw((ii-action_scope)+2, 9+33, "%i                                 ", ii);
+        //We're using event count so that the level of the │ and the function
+        //name doesn't change when you're scrolling because that's ugly
+        if (curr_action_meta!=NULL)
+        {
+          mvprintw((ii-action_scope)+2, 9+34+int_len(obj->event_count), "│%s", curr_action_meta->name);
+        }
+        else
+        {
+          //Fallback to the functionname provided by the GMX if we have no name for it
+          mvprintw((ii-action_scope)+2, 9+34+int_len(obj->event_count), "│%s (missing)", obj->events[i]->actions[ii]->functionname);
+        }
+        attroff(A_REVERSE);
+      }
+      if (section==1)
+      {
+        attron(A_REVERSE);
+      }
+    }
+    mvaddstr((i-event_scope)+2, 19, "                       ");
+
+    switch (obj->events[i]->eventtype)
+    {
+      case 2:
+        mvprintw((i-event_scope)+2,19,"│⌛  Alarm  %i",obj->events[i]->enumb);
+        break;
+      case 3:
+        mvprintw((i-event_scope)+2, 19,"│🚶  %s",step_event_type_name[obj->events[i]->enumb]);
+        break;
+      case 4:
+        mvprintw((i-event_scope)+2, 19,"│↸  %.18s",obj->events[i]->ename);
+        break;
+      case 5:
+        mvprintw((i-event_scope)+2, 19,"│️ ⃣️  %s", keys_names[obj->events[i]->enumb]);
+        break;
+      case 6:
+        mvprintw((i-event_scope)+2, 19,"│️┬⃣️  %s", mouse_button_names[obj->events[i]->enumb]);
+        break;
+      case 7:
+        mvprintw((i-event_scope)+2, 19,"│…  %s",other_event_type_name[obj->events[i]->enumb]);
+        break;
+      case 8:
+        mvprintw((i-event_scope)+2, 19,"│️✏  %s", draw_event_type_name[event_draw_enumb_to_index(obj->events[i]->enumb)]);
+        break;
+      case 9:
+        mvprintw((i-event_scope)+2, 19,"│️⬆️⃣️  %s", keys_names[obj->events[i]->enumb]);
+        break;
+      case 10:
+        mvprintw((i-event_scope)+2, 19,"│️⬇️⃣️  %s", keys_names[obj->events[i]->enumb]);
+        break;
+      default:
+        mvprintw((i-event_scope)+2, 19,"│%s",event_type_name[obj->events[i]->eventtype]);
+        break;
+    }
+    attroff(A_REVERSE);
+  }
+  for (ii=(
+      ((selected_event<obj->event_count)&(selected_event>=0))?
+      (obj->events[selected_event]->action_count):
+      (0)
+    )+2;ii<terminal_height;ii++)
+  {
+    //If we're not filling the whole screen with actions then clear those parts
+    mvaddstr(ii, 9+33, "                                 ");
+  }
+  for (ii=obj->event_count+2;ii<terminal_height;ii++)
+  {
+    //If we're not filling the whole screen with events then clear those parts
+    mvaddstr(ii, 19, "                       ");
+  }
+}
+
+void toolbar_active(struct gm_object *obj, char **obj_file, int *selected_event, int *selected_action, int *section)
+{
+  int toolbar_option=0;
+  int last_key=0;
+  int toolbar_max=2;
+  attron(A_BOLD|A_REVERSE);
+  while (last_key!=27)
+  {
+    mvaddstr(0, 0, "New│Save│Load│");
+    if (last_key==KEY_RIGHT)
+    {
+      if (toolbar_option>=toolbar_max)
+      {
+        toolbar_option=0;
+      }
+      else
+      {
+        toolbar_option++;
+      }
+    }
+    else
+    {
+      if (last_key==KEY_LEFT)
+      {
+        if (toolbar_option<=0)
+        {
+          toolbar_option=toolbar_max;
+        }
+        else
+        {
+          toolbar_option--;
+        }
+      }
+    }
+
+    if (toolbar_option==0)
+    {
+      attroff(A_REVERSE);
+      mvaddstr(0, 0, "New");
+      attron(A_REVERSE);
+      if (last_key=='\n')
+      {
+        mvaddstr(0, strlen("New|Save|Load|"), "WARNING: Any unsaved changes will be destroyed! [Enter]");
+        mvaddstr(0, terminal_width-strlen(*obj_file), *obj_file);
+        refresh();
+        //Any other key acts like a no... Something Macroshaft doesn't seem to understand
+        if (getch()=='\n')
+        {
+          obj_free(obj);
+          obj=new_object();
+          //Let's just use an empty string
+          *obj_file=calloc(1,sizeof(char));
+        }
+        last_key=0;
+        clear();
+        break;
+      }
+    }
+    else if (toolbar_option==1)
+    {
+      attroff(A_REVERSE);
+      mvaddstr(0, strlen("New|"), "Save");
+      attron(A_REVERSE);
+      if (last_key=='\n')
+      {
+        if (file_box(stdscr,&(*obj_file),0, strlen("New|Save|Load|"), terminal_width-(strlen("New|Save|Load|")+strlen(*obj_file)), true)==1)
+        {
+          save_obj(obj,*obj_file);
+        }
+        break;
+      }
+    }
+    else if (toolbar_option==2)
+    {
+      attroff(A_REVERSE);
+      mvaddstr(0, strlen("New|Save|"), "Load");
+      attron(A_REVERSE);
+      if (last_key=='\n')
+      {
+        mvaddstr(0, strlen("New|Save|Load|"), "WARNING: Any unsaved changes will be destroyed! [Enter]");
+        mvaddstr(0, terminal_width-strlen(*obj_file), *obj_file);
+        refresh();
+        if (getch()=='\n')
+        {
+          if (file_box(stdscr,&(*obj_file),0, strlen("New|Save|Load|"), terminal_width-(strlen("New|Save|Load|")+strlen(*obj_file)), true)==1)
+          {
+            //Reload!
+            obj_free(obj);
+            obj=object_from_file(*obj_file);
+            if (obj==NULL)
+            {
+              exit(1);
+            }
+            //Reset this stuff
+            selected_event=0;
+            selected_action=0;
+            section=0;
+          }
+        }
+        last_key=0;
+        clear();
+        break;
+
+      }
+    }
+    last_key=getch();
+    refresh();
+  }
+  attroff(A_BOLD|A_REVERSE);
+}
+
+void draw_toolbar(char *obj_file)
+{
+  int i;
+  attron(A_BOLD|A_REVERSE);
+  mvaddstr(0, 0, "New│Save│Load│");
+  for (i=strlen("New|Save|Load|");i<terminal_width;i++){mvaddstr(0, i, " ");}
+  mvaddstr(0, terminal_width-strlen(obj_file), obj_file);
+  attroff(A_BOLD|A_REVERSE);
+}
 int main(int argc, char **argv)
 {
   int i;
   int ii;
-  //Informal type names
-  event_type_name[0] =  "☀  Create";
-  event_type_name[1] =  "♻  Destroy";
-  event_type_name[2] =  "⌛  Alarm";
-  event_type_name[3] =  "🚶  Step";
-  event_type_name[4] =  "↸  Collision";
-  event_type_name[5] =  "⌨  Key";
-  event_type_name[6] =  "┬⃣  Mouse";
-  event_type_name[7] =  "…  Other";
-  event_type_name[8] =  "✏  Draw";
-  event_type_name[9] =  "⌨  Pressed";
-  event_type_name[10] = "⌨  Released";
-  //Informal enumb names
-  event_enumb_name[0] =  NULL;
-  event_enumb_name[1] =  NULL;
-  event_enumb_name[2] =  "Alarm number:"; //note: >11 unsupported by many implementations, put this in documentation
-  event_enumb_name[3] =  "Step type:";
-  event_enumb_name[4] =  "Object:";
-  event_enumb_name[5] =  "Key number:";
-  event_enumb_name[6] =  "Mouse button:";
-  event_enumb_name[7] =  "Other event:";
-  event_enumb_name[8] =  "Draw type:";
-  event_enumb_name[9] =  "Key number:";
-  event_enumb_name[10] = "Key number:";
-  //Informal enumb names for other aka [7]
-  other_event_type_name[0] = "Outside Room";
-  other_event_type_name[1] = "Intersect Boundary";
-  other_event_type_name[2] = "Game Start";
-  other_event_type_name[3] = "Game End";
-  other_event_type_name[4] = "Room Start";
-  other_event_type_name[5] = "Room End";
-  other_event_type_name[6] = "Out of lives";
-  other_event_type_name[7] = "Animation End";
-  other_event_type_name[8] = "End of Path";
-  other_event_type_name[9] = "Out of Health";
-  other_event_type_name[10] = "User Defined 0";
-  other_event_type_name[11] = "User Defined 1";
-  other_event_type_name[12] = "User Defined 2";
-  other_event_type_name[13] = "User Defined 3";
-  other_event_type_name[14] = "User Defined 4";
-  other_event_type_name[15] = "User Defined 5";
-  other_event_type_name[16] = "User Defined 6";
-  other_event_type_name[17] = "User Defined 7";
-  other_event_type_name[18] = "User Defined 8";
-  other_event_type_name[19] = "User Defined 9";
-  other_event_type_name[20] = "User Defined 10";
-  other_event_type_name[21] = "User Defined 11";
-  other_event_type_name[22] = "User Defined 12";
-  other_event_type_name[23] = "User Defined 13";
-  other_event_type_name[24] = "User Defined 14";
-  other_event_type_name[25] = "User Defined 15";
-  //They skip to 30 here
-  other_event_type_name[30] = "Close Button";
-  //Then to 40
-  other_event_type_name[40] = "Outside View 0";
-  other_event_type_name[41] = "Outside View 1";
-  other_event_type_name[42] = "Outside View 2";
-  other_event_type_name[43] = "Outside View 3";
-  other_event_type_name[44] = "Outside View 4";
-  other_event_type_name[46] = "Outside View 5";
-  other_event_type_name[47] = "Outside View 6";
-  other_event_type_name[48] = "Outside View 7";
-  //Skips to 50 here
-  other_event_type_name[50] = "Boundary View 0";
-  other_event_type_name[51] = "Boundary View 1";
-  other_event_type_name[52] = "Boundary View 2";
-  other_event_type_name[53] = "Boundary View 3";
-  other_event_type_name[54] = "Boundary View 4";
-  other_event_type_name[55] = "Boundary View 5";
-  other_event_type_name[56] = "Boundary View 6";
-  other_event_type_name[57] = "Boundary View 7";
-  //Skips to 60 here
-  other_event_type_name[60] = "Image Loaded";
-  other_event_type_name[61] = "Sound Loaded";
-  other_event_type_name[62] = "HTTP";
-  other_event_type_name[63] = "Dialog";
-  //Skips, probably because yoyo decided to throw the new draw events in 64 and 65
-  other_event_type_name[66] = "IAP";
-  other_event_type_name[67] = "Cloud";
-  other_event_type_name[68] = "Networking";
-  other_event_type_name[69] = "Steam";
-  other_event_type_name[70] = "Social";
-  //Step event Types
-  step_event_type_name[0] = "Step";
-  step_event_type_name[1] = "Pre-step";
-  step_event_type_name[2] = "Post-step";
-  //Draw event Types
-  draw_event_type_name[0] = "Draw";
-  //Because we put them in the other_event_type_name array
-  draw_event_type_name[1] = "GUI"; //In the GMX format this is enumb 64 of draw
-  draw_event_type_name[2] = "Resize"; //In the GMX format this is enumb 65 of draw
-  //Mouse event types
-  mouse_button_names[0] = "Left";
-  mouse_button_names[1] = "Right";
-  mouse_button_names[2] = "Middle";
-  mouse_button_names[3] = "None";
-  mouse_button_names[4] = "Left Pressed";
-  mouse_button_names[5] = "Right Pressed";
-  mouse_button_names[6] = "Middle Pressed";
-  mouse_button_names[7] = "Left Released";
-  mouse_button_names[8] = "Right Released";
-  mouse_button_names[9] = "Middle Released";
-  mouse_button_names[10] = "Enters";
-  mouse_button_names[11] = "Leaves";
-  mouse_button_names[16] = "Gamepad 1 Left";
-  mouse_button_names[17] = "Gamepad 1 Right";
-  mouse_button_names[18] = "Gamepad 1 Up";
-  mouse_button_names[19] = "Gamepad 1 Down";
-  mouse_button_names[21] = "Gamepad 1 Button 1";
-  mouse_button_names[22] = "Gamepad 1 Button 2";
-  mouse_button_names[23] = "Gamepad 1 Button 3";
-  mouse_button_names[24] = "Gamepad 1 Button 4";
-  mouse_button_names[25] = "Gamepad 1 Button 5";
-  mouse_button_names[26] = "Gamepad 1 Button 6";
-  mouse_button_names[27] = "Gamepad 1 Button 7";
-  mouse_button_names[28] = "Gamepad 1 Button 8";
-  mouse_button_names[31] = "Gamepad 2 Left";
-  mouse_button_names[32] = "Gamepad 2 Right";
-  mouse_button_names[33] = "Gamepad 2 Up";
-  mouse_button_names[34] = "Gamepad 2 Down";
-  mouse_button_names[36] = "Gamepad 2 Button 1";
-  mouse_button_names[37] = "Gamepad 2 Button 2";
-  mouse_button_names[38] = "Gamepad 2 Button 3";
-  mouse_button_names[39] = "Gamepad 2 Button 4";
-  mouse_button_names[40] = "Gamepad 2 Button 5";
-  mouse_button_names[41] = "Gamepad 2 Button 6";
-  mouse_button_names[42] = "Gamepad 2 Button 7";
-  mouse_button_names[43] = "Gamepad 2 Button 8";
-  mouse_button_names[50] = "Global Left";
-  mouse_button_names[51] = "Global Right";
-  mouse_button_names[52] = "Global Middle";
-  mouse_button_names[53] = "Global Left Pressed";
-  mouse_button_names[54] = "Global Right Pressed";
-  mouse_button_names[55] = "Global Middle Pressed";
-  mouse_button_names[56] = "Global Left Released";
-  mouse_button_names[57] = "Global Right Released";
-  mouse_button_names[58] = "Global Middle Released";
-  mouse_button_names[61] = "Wheel Up";
-  mouse_button_names[62] = "Wheel Down";
-  //Keys event types
-  //https://github.com/IsmAvatar/LateralGM/blob/220dc7da6dc358bde0d691f52100c852283831a3/org/lateralgm/resources/sub/Event.java
-  keys_names[0] = "No key";
-  keys_names[1] = "Any key";
-  keys_names[13] = "Enter";
-  keys_names[16] = "Shift";
-  keys_names[17] = "Control";
-  keys_names[18] = "Alt";
-  keys_names[32] = "Space";
-  keys_names[37] = "Left";
-  keys_names[38] = "Up";
-  keys_names[39] = "Right";
-  keys_names[40] = "Down";
-  keys_names[48] = "0";
-  keys_names[49] = "1";
-  keys_names[50] = "2";
-  keys_names[51] = "3";
-  keys_names[52] = "4";
-  keys_names[53] = "5";
-  keys_names[54] = "6";
-  keys_names[55] = "7";
-  keys_names[56] = "8";
-  keys_names[57] = "9";
-  keys_names[65] = "A";
-  keys_names[66] = "B";
-  keys_names[67] = "C";
-  keys_names[68] = "D";
-  keys_names[69] = "E";
-  keys_names[70] = "F";
-  keys_names[71] = "G";
-  keys_names[72] = "H";
-  keys_names[73] = "I";
-  keys_names[74] = "J";
-  keys_names[75] = "K";
-  keys_names[76] = "L";
-  keys_names[77] = "M";
-  keys_names[78] = "N";
-  keys_names[79] = "O";
-  keys_names[80] = "P";
-  keys_names[81] = "Q";
-  keys_names[82] = "R";
-  keys_names[83] = "S";
-  keys_names[84] = "T";
-  keys_names[85] = "U";
-  keys_names[86] = "V";
-  keys_names[87] = "W";
-  keys_names[88] = "X";
-  keys_names[89] = "Y";
-  keys_names[90] = "Z";
+  init_names();
   //We don't use any function keys, so don't bother with escape delay
   ESCDELAY=0;
   srand(time(NULL));
@@ -794,8 +1135,6 @@ int main(int argc, char **argv)
 
   int last_key=0;
   setlocale(LC_ALL, "en_US.UTF-8");
-  int toolbar_option=0;
-  #define toolbar_max 2
   int v_option=0;
   int selected_event=0;
   int selected_action=0;
@@ -856,11 +1195,11 @@ int main(int argc, char **argv)
         //Show action editing window
         if (section==1)
         {
-          edit_event(obj->events[selected_event]);
+          edit_event_menu(obj->events[selected_event]);
         }
         else if ((section==2) & (selected_action<obj->events[selected_event]->action_count)&(obj->events[selected_event]->actions!=NULL))
         {
-          edit_action(obj->events[selected_event]->actions[selected_action]);
+          edit_action_menu(obj->events[selected_event]->actions[selected_action]);
         }
       }
 
@@ -888,90 +1227,7 @@ int main(int argc, char **argv)
     //Add action, make sure there are events to add the action to
     if ((last_key==create_new_action_key)&(selected_event<obj->event_count))
     {
-      struct lgl_action_meta action_to_add_meta;
-      int selected_id;
-      int selected_action_to_add=0;
-      int action_scope_to_add=0;
-      WINDOW *new_action_window;
-      new_action_window=newwin(terminal_height-4, terminal_width-4, 2,2);
-      struct lgl_action_meta *action_list;
-      last_key=0;
-      while ((last_key!=27)&(last_key!='\n'))
-      {
-        wclear(new_action_window);
-        //Controls
-        handle_menu_ctrls(last_key,&selected_action_to_add,&action_scope_to_add,lgl_action_count,terminal_height-7);
-        for (action_list=action_meta_dict, i = 0;(action_list != NULL)&(i-action_scope_to_add<terminal_height-6)&
-          (i<action_scope_to_add+terminal_height - 6);
-          action_list=action_list->hh.next, i++)
-        {
-          //Only draw if it's within the scope
-          if ((i+1>action_scope_to_add))
-          {
-            if (i==selected_action_to_add)
-            {
-              selected_id=action_list->id;
-              wattron(new_action_window,A_REVERSE);
-            }
-            //If the kind is 10 it's a label, not an actual action
-            if (action_list->kind==10)
-            {
-              wattron(new_action_window,A_BOLD);
-              mvwprintw(new_action_window,i-action_scope_to_add+1,2,"[%s]",action_list->name);
-              wattroff(new_action_window,A_BOLD);
-            }
-            //If the kind is 9 it's a separator
-            else if (action_list->kind==9)
-            {
-              for (ii=1;ii<terminal_width-5;ii++)
-              {
-                mvwaddstr(new_action_window,i-action_scope_to_add+1,ii,"─");
-              }
-            }
-            else
-            {
-              mvwaddstr(new_action_window,i-action_scope_to_add+1,2,action_list->name);
-            }
-            wattroff(new_action_window,A_REVERSE);
-          }
-        }
-        draw_window_border(new_action_window, "New action");
-        wrefresh(new_action_window);
-        last_key=getch();
-      }
-      action_to_add_meta=*get_action_meta(selected_id);
-      if ((last_key=='\n')&(action_to_add_meta.kind!=9)&(action_to_add_meta.kind!=10))
-      {
-        //Make space in the array for the new action, selected_action++
-        new_action(obj->events[selected_event], selected_action);
-        //Copy stuff from template
-        obj->events[selected_event]->actions[selected_action]->libid=action_to_add_meta.libid;
-        obj->events[selected_event]->actions[selected_action]->id=action_to_add_meta.id;
-        obj->events[selected_event]->actions[selected_action]->kind=action_to_add_meta.kind;
-        obj->events[selected_event]->actions[selected_action]->userelative=action_to_add_meta.userelative;
-        obj->events[selected_event]->actions[selected_action]->useapplyto=action_to_add_meta.useapplyto;
-        obj->events[selected_event]->actions[selected_action]->isquestion=action_to_add_meta.isquestion;
-        obj->events[selected_event]->actions[selected_action]->exetype=action_to_add_meta.exetype;
-        obj->events[selected_event]->actions[selected_action]->functionname=action_to_add_meta.functionname;
-        obj->events[selected_event]->actions[selected_action]->codestring=action_to_add_meta.codestring;
-        //Because this won't be filled by the template, this will always be the default anyways
-        obj->events[selected_event]->actions[selected_action]->whoName = malloc((strlen("self")+1)*sizeof(char));
-        strcpy(obj->events[selected_event]->actions[selected_action]->whoName,"self");
-        //
-        obj->events[selected_event]->actions[selected_action]->arg_count=action_to_add_meta.arg_count;
-        obj->events[selected_event]->actions[selected_action]->arguments = calloc(obj->events[selected_event]->actions[selected_action]->arg_count, sizeof(struct gm_argument));
-        for (i=0;i<obj->events[selected_event]->actions[selected_action]->arg_count;i++)
-        {
-          struct gm_argument *curr_arg = calloc(1,sizeof(struct gm_argument));
-          curr_arg->kind=action_to_add_meta.arguments[i]->kind;
-          obj->events[selected_event]->actions[selected_action]->arguments[i]=curr_arg;
-        }
-        //Add an action created from the get_action_meta(ID RETURNED FROM BEFORE)
-        edit_action(obj->events[selected_event]->actions[selected_action]);
-        section=2;
-      }
-      last_key=0;
-      clear();
+      new_action_menu(obj, selected_event, selected_action, &section);
     }
     //Move action
     if (last_key==move_up_key)
@@ -1003,38 +1259,7 @@ int main(int argc, char **argv)
     //Add event
     if (last_key==create_new_event_key)
     {
-      int selected_event_to_add=0;
-      int event_scope_to_add=0;
-      WINDOW *new_event_window;
-      new_event_window=newwin(terminal_height-4, terminal_width-4, 2,2);
-      while ((last_key!='\n')&(last_key!=27))
-      {
-        wclear(new_event_window);
-        handle_menu_ctrls(last_key,&selected_event_to_add,&event_scope_to_add,11,terminal_height-7);
-        for (i=event_scope_to_add;(i<11)&(i<event_scope_to_add+terminal_height-4);i++)
-        {
-          if (i==selected_event_to_add)
-          {
-            wattron(new_event_window,A_REVERSE);
-          }
-          mvwaddstr(new_event_window,1+i-event_scope_to_add, 2, event_type_name[i]);
-          wattroff(new_event_window,A_REVERSE);
-        }
-        draw_window_border(new_event_window, "New Event");
-        wrefresh(new_event_window);
-        last_key=getch();
-      }
-      if (last_key=='\n')
-      {
-        new_event(obj,selected_event_to_add);
-        edit_event(obj->events[obj->event_count-1]);
-        selected_event=obj->event_count-1;
-      }
-      else
-      {
-        clear();
-      }
-      last_key=0;
+      new_event_menu(obj, &selected_event);
     }
     //Changing sections
     if (last_key=='\t')
@@ -1048,143 +1273,16 @@ int main(int argc, char **argv)
         section=0;
       }
     }
-    //titlebar
+    //toolbar
     //We're doing this first so that everything is up to date when we draw it
-    attron(A_BOLD|A_REVERSE);
+
     if (last_key==27)
     {
-      last_key=0;
-      while (last_key!=27)
-      {
-        mvaddstr(0, 0, "New│Save│Load│");
-        if (last_key==KEY_RIGHT)
-        {
-          if (toolbar_option>=toolbar_max)
-          {
-            toolbar_option=0;
-          }
-          else
-          {
-            toolbar_option++;
-          }
-        }
-        else
-        {
-          if (last_key==KEY_LEFT)
-          {
-            if (toolbar_option<=0)
-            {
-              toolbar_option=toolbar_max;
-            }
-            else
-            {
-              toolbar_option--;
-            }
-          }
-        }
-
-        if (toolbar_option==0)
-        {
-          attroff(A_REVERSE);
-          mvaddstr(0, 0, "New");
-          attron(A_REVERSE);
-          if (last_key=='\n')
-          {
-            mvaddstr(0, strlen("New|Save|Load|"), "WARNING: Any unsaved changes will be destroyed! [Enter]");
-            mvaddstr(0, terminal_width-strlen(obj_file), obj_file);
-            refresh();
-            //Any other key acts like a no... Something Macroshaft doesn't seem to understand
-            if (getch()=='\n')
-            {
-              obj_free(obj);
-              obj=new_object();
-              //Let's just use an empty string
-              obj_file=calloc(1,sizeof(char));
-            }
-            last_key=0;
-            clear();
-            break;
-          }
-        }
-        else if (toolbar_option==1)
-        {
-          attroff(A_REVERSE);
-          mvaddstr(0, strlen("New|"), "Save");
-          attron(A_REVERSE);
-          if (last_key=='\n')
-          {
-            if (file_box(stdscr,&obj_file,0, strlen("New|Save|Load|"), terminal_width-(strlen("New|Save|Load|")+strlen(obj_file)), true)==1)
-            {
-              save_obj(obj,obj_file);
-            }
-            break;
-          }
-        }
-        else if (toolbar_option==2)
-        {
-          attroff(A_REVERSE);
-          mvaddstr(0, strlen("New|Save|"), "Load");
-          attron(A_REVERSE);
-          if (last_key=='\n')
-          {
-            mvaddstr(0, strlen("New|Save|Load|"), "WARNING: Any unsaved changes will be destroyed! [Enter]");
-            mvaddstr(0, terminal_width-strlen(obj_file), obj_file);
-            refresh();
-            if (getch()=='\n')
-            {
-              if (file_box(stdscr,&obj_file,0, strlen("New|Save|Load|"), terminal_width-(strlen("New|Save|Load|")+strlen(obj_file)), true)==1)
-              {
-                //Reload!
-                obj_free(obj);
-                obj=object_from_file(obj_file);
-                if (obj==NULL)
-                {
-                  exit(1);
-                }
-                //Reset this stuff
-                selected_event=0;
-                selected_action=0;
-                section=0;
-              }
-            }
-            last_key=0;
-            clear();
-            break;
-
-          }
-        }
-        last_key=getch();
-        refresh();
-      }
-      last_key=0;
+      toolbar_active(obj, &obj_file, &selected_event, &selected_action, &section);
     }
-    mvaddstr(0, 0, "New│Save│Load│");
-    for (i=strlen("New|Save|Load|");i<terminal_width;i++){mvaddstr(0, i, " ");}
-    mvaddstr(0, terminal_width-strlen(obj_file), obj_file);
-    attroff(A_BOLD|A_REVERSE);
+    draw_toolbar(obj_file);
 
     //Basic options
-    //Box
-    mvaddstr(1, 0,                      "┌───────────────┐");
-    for (i=2;i<16;i++)
-    {
-      mvaddstr(i, 0, "│");
-      mvaddstr(i, 16,"│");
-    }
-    mvaddstr(16, 0,                     "└───┴───┴───┴───┘");
-    //UI
-    attron(A_BOLD);
-    mvaddstr(3-1, 1,   "Sprite:");
-    mvaddstr(3+2, 1,   "Mask:");
-    mvaddstr(3+5, 1,   "Parent:");
-    mvaddstr(3+5+3, 1, "Depth:");
-    mvaddstr(3+8+3, 1, "Vis│Sol│Per│Phy");
-    for (i=4;i<16;i+=4)
-    {
-      mvaddstr(3+9+3, i,  "│");
-    }
-
-    attroff(A_BOLD);
     if (section==0)
     {
       if ((last_key==KEY_DOWN)|(last_key==KEY_RIGHT))
@@ -1210,6 +1308,28 @@ int main(int argc, char **argv)
         }
       }
     }
+
+    //Box
+    mvaddstr(1, 0,                      "┌───────────────┐");
+    for (i=2;i<16;i++)
+    {
+      mvaddstr(i, 0, "│");
+      mvaddstr(i, 16,"│");
+    }
+    mvaddstr(16, 0,                     "└───┴───┴───┴───┘");
+    //UI
+    attron(A_BOLD);
+    mvaddstr(3-1, 1,   "Sprite:");
+    mvaddstr(3+2, 1,   "Mask:");
+    mvaddstr(3+5, 1,   "Parent:");
+    mvaddstr(3+5+3, 1, "Depth:");
+    mvaddstr(3+8+3, 1, "Vis│Sol│Per│Phy");
+    for (i=4;i<16;i+=4)
+    {
+      mvaddstr(3+9+3, i,  "│");
+    }
+
+    attroff(A_BOLD);
 
     if ((v_option==0)&(section==0))
     {
@@ -1278,89 +1398,8 @@ int main(int argc, char **argv)
     draw_bool(3+9+3,14,obj->PhysicsObject);
     attroff(A_REVERSE);
 
-    for (i=event_scope;i<obj->event_count;i++)
-    {
-      if (selected_event==i)
-      {
-        int ii;
-        for (ii=action_scope;ii<obj->events[i]->action_count;ii++)
-        {
-          struct lgl_action_meta *curr_action_meta=get_action_meta(obj->events[i]->actions[ii]->id);
-          if ((selected_action==ii)&(section==2))
-          {
-            attron(A_REVERSE);
-          }
-          //Clear the space so that there aren't characters left over from before
-          mvprintw((ii-action_scope)+2, 9+33, "%i                                 ", ii);
-          //We're using event count so that the level of the │ and the function
-          //name doesn't change when you're scrolling because that's ugly
-          if (curr_action_meta!=NULL)
-          {
-            mvprintw((ii-action_scope)+2, 9+34+int_len(obj->event_count), "│%s", curr_action_meta->name);
-          }
-          else
-          {
-            //Fallback to the functionname provided by the GMX if we have no name for it
-            mvprintw((ii-action_scope)+2, 9+34+int_len(obj->event_count), "│%s (missing)", obj->events[i]->actions[ii]->functionname);
-          }
-          attroff(A_REVERSE);
-        }
-        if (section==1)
-        {
-          attron(A_REVERSE);
-        }
-      }
-      mvaddstr((i-event_scope)+2, 19, "                       ");
+    draw_events_and_actions(obj, event_scope, action_scope, selected_event, selected_action, section);
 
-      switch (obj->events[i]->eventtype)
-      {
-        case 2:
-          mvprintw((i-event_scope)+2,19,"│⌛  Alarm  %i",obj->events[i]->enumb);
-          break;
-        case 3:
-          mvprintw((i-event_scope)+2, 19,"│🚶  %s",step_event_type_name[obj->events[i]->enumb]);
-          break;
-        case 4:
-          mvprintw((i-event_scope)+2, 19,"│↸  %.18s",obj->events[i]->ename);
-          break;
-        case 5:
-          mvprintw((i-event_scope)+2, 19,"│️ ⃣️  %s", keys_names[obj->events[i]->enumb]);
-          break;
-        case 6:
-          mvprintw((i-event_scope)+2, 19,"│️┬⃣️  %s", mouse_button_names[obj->events[i]->enumb]);
-          break;
-        case 7:
-          mvprintw((i-event_scope)+2, 19,"│…  %s",other_event_type_name[obj->events[i]->enumb]);
-          break;
-        case 8:
-          mvprintw((i-event_scope)+2, 19,"│️✏  %s", draw_event_type_name[event_draw_enumb_to_index(obj->events[i]->enumb)]);
-          break;
-        case 9:
-          mvprintw((i-event_scope)+2, 19,"│️⬆️⃣️  %s", keys_names[obj->events[i]->enumb]);
-          break;
-        case 10:
-          mvprintw((i-event_scope)+2, 19,"│️⬇️⃣️  %s", keys_names[obj->events[i]->enumb]);
-          break;
-        default:
-          mvprintw((i-event_scope)+2, 19,"│%s",event_type_name[obj->events[i]->eventtype]);
-          break;
-      }
-      attroff(A_REVERSE);
-    }
-    for (ii=(
-        ((selected_event<obj->event_count)&(selected_event>=0))?
-        (obj->events[selected_event]->action_count):
-        (0)
-      )+2;ii<terminal_height;ii++)
-    {
-      //If we're not filling the whole screen with actions then clear those parts
-      mvaddstr(ii, 9+33, "                                 ");
-    }
-    for (ii=obj->event_count+2;ii<terminal_height;ii++)
-    {
-      //If we're not filling the whole screen with actions then clear those parts
-      mvaddstr(ii, 19, "                       ");
-    }
     refresh();
     last_key=getch();
   }
