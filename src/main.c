@@ -1174,15 +1174,22 @@ void draw_toolbar(char *obj_file)
   mvaddstr(0, terminal_width-strlen(obj_file), obj_file);
   attroff(A_BOLD|A_REVERSE);
 }
+
 int main(int argc, char **argv)
 {
+  char lib_location[256]="./lib/";
   int i;
   int ii;
   init_names();
   //We don't use any function keys, so don't bother with escape delay
   ESCDELAY=0;
   srand(time(NULL));
-  load_lgl_dir("./lib/");
+  //We're doing this rather than a simple "./lib" because "." gets the working
+  //directory, not the directory of the executable file itself.
+  readlink("/proc/self/exe", lib_location, 256);
+  dirname(lib_location);
+  strcat(lib_location,"/lib/");
+  load_lgl_dir(lib_location);
 
   int last_key=0;
   setlocale(LC_ALL, "en_US.UTF-8");
