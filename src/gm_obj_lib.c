@@ -388,7 +388,7 @@ int save_obj(struct gm_object *obj, char *file_str)
   {
     return 1; //1 = error
   }
-  xmlTextWriterStartDocument(writer, NULL, "UTF-8", "no");
+  xmlTextWriterStartDocument(writer, NULL, "UTF-16", "no");
   //Root
   xmlTextWriterStartElement(writer, BAD_CAST "object");
   xmlTextWriterWriteElement(writer, BAD_CAST "spriteName", BAD_CAST obj->spriteName);
