@@ -104,7 +104,7 @@ struct gm_object *object_from_file(char *file)
     else if (strcmp(cur_node->name, "events")==0)
     {
       object_to_return->event_count = xmlChildElementCount(cur_node);
-      object_to_return->events = calloc(object_to_return->event_count,sizeof(struct gm_event*));
+      object_to_return->events = calloc(object_to_return->event_count,sizeof(struct gm_event));
 
       int i;
       xmlNode *event_node = xmlFirstElementChild(cur_node);
@@ -117,7 +117,7 @@ struct gm_object *object_from_file(char *file)
           int ii;
           curr_event->action_count = xmlChildElementCount(event_node);
           xmlNode *action_node = xmlFirstElementChild(event_node);
-          curr_event->actions = calloc(curr_event->action_count,sizeof(struct gm_action*));
+          curr_event->actions = calloc(curr_event->action_count,sizeof(struct gm_action));
           for (ii=0;ii<(curr_event->action_count);ii++)
           {
             if (action_node->type == XML_ELEMENT_NODE)
@@ -182,7 +182,7 @@ struct gm_object *object_from_file(char *file)
                   int iii;
                   curr_action->arg_count = xmlChildElementCount(action_property_node);
                   xmlNode *arg_node = xmlFirstElementChild(action_property_node);
-                  curr_action->arguments = calloc(curr_action->arg_count, sizeof(struct gm_argument*));
+                  curr_action->arguments = calloc(curr_action->arg_count, sizeof(struct gm_argument));
                   for (iii=0;iii<(curr_action->arg_count);iii++)
                   {
                     struct gm_argument *curr_arg = calloc(1,sizeof(struct gm_argument));
@@ -511,7 +511,7 @@ void action_free(struct gm_action *action)
   free(action->codestring);
   free(action->whoName);
   //Args
-  for (i=0;i<action->arg_count;i++)
+  for (i=0;i<action->arg_count-1;i++)
   {
     free(action->arguments[i]->string);
     free(action->arguments[i]);
@@ -524,7 +524,7 @@ void event_free(struct gm_event *event)
 {
   int i;
   //Actions
-  for (i=0;i<event->action_count;i++)
+  for (i=0;i<event->action_count-1;i++)
   {
     action_free(event->actions[i]);
   }
@@ -540,7 +540,7 @@ void obj_free(struct gm_object *obj)
   free(obj->parentName);
   int i;
   //Events
-  for (i=0;i<obj->event_count;i++)
+  for (i=0;i<obj->event_count-1;i++)
   {
     event_free(obj->events[i]);
   }
@@ -557,7 +557,7 @@ void obj_free(struct gm_object *obj)
 struct gm_event *new_event(struct gm_object *obj,int eventtype)
 {
   struct gm_event *event;
-  obj->events=realloc(obj->events,sizeof(struct gm_event*)*(obj->event_count+1));
+  obj->events=realloc(obj->events,sizeof(struct gm_event)*(obj->event_count+1)); //I think this is returning null...
   event=calloc(1,sizeof(struct gm_event));
   event->eventtype=eventtype;
   obj->events[obj->event_count++]=event;
@@ -569,7 +569,7 @@ int delete_event(struct gm_object *obj,int where)
   if (where<obj->event_count)
   {
     event_free(obj->events[where]);
-    memmove(&obj->events[where], &obj->events[where+1], sizeof(struct gm_event*)*((obj->event_count--)-where));
+    memmove(&obj->events[where], &obj->events[where+1], sizeof(struct gm_event)*((obj->event_count--)-where));
     return 1;
   }
   return 0;
@@ -580,8 +580,8 @@ struct gm_action *new_action(struct gm_event *event, int where)
 {
   //WE'RE GETTING NULLS AGAIN!!!
   struct gm_action *action;
-  event->actions=realloc(event->actions,sizeof(struct gm_action*)*(event->action_count+1));
-  memmove(&event->actions[where+1], &event->actions[where], sizeof(struct gm_action*)*((event->action_count++)-where));
+  event->actions=realloc(event->actions,sizeof(struct gm_action)*(event->action_count+1));
+  memmove(&event->actions[where+1], &event->actions[where], sizeof(struct gm_action)*((event->action_count++)-where));
   action=calloc(1,sizeof(struct gm_action));
   event->actions[where++]=action;
   return action;

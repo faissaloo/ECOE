@@ -768,8 +768,8 @@ int edit_action_menu(struct gm_action *selected_action)
           long long size = ftell(file_pointer);
           rewind(file_pointer);
           //Make sure there's enough space in the buffer
-          selected_action->arguments[0]->string=realloc(selected_action->arguments[0]->string,size);
-          fread(selected_action->arguments[0]->string, size, 1, file_pointer);
+          selected_action->arguments[0]->string=realloc(selected_action->arguments[0]->string,size+1);
+          fgets(selected_action->arguments[0]->string, size+1, file_pointer);
           fclose(file_pointer);
         }
       }

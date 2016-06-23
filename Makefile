@@ -12,7 +12,7 @@ debug:
 	gdb -tui ecoe
 memcheck:
 	$(CC) -o ecoe -Wall `xml2-config --cflags` ./src/main.c ./src/gm_obj_lib.c ./src/lgl_lib.c `xml2-config --libs` -lncursesw -g
-	valgrind --tool=memcheck --leak-check=full ./editor 2> log.txt
+	valgrind --tool=memcheck --leak-check=full ./ecoe 2> log.txt
 	less log.txt
 	rm log.txt
 clean:
