@@ -6,10 +6,7 @@
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
 #include "gm_obj_lib.h"
-#define max(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a > _b ? _a : _b; })
+#define max(a,b) (a)<(b)?(b):(a)
 
 //intnc (int from node content)
 int intnc(int *int_ptr, xmlNode *node)

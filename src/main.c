@@ -6,21 +6,16 @@
 #include <ncurses.h>
 #include <dirent.h>
 #include <string.h>
+#include <libgen.h>
 #include <time.h> //For seeding rand()
 #include "gm_obj_lib.h"
 #include "lgl_lib.h"
 #include "settings.h"
 #define true 1
 #define false 0
-#define min(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a < _b ? _a : _b; })
+#define min(a,b) (a)>(b)?(b):(a)
 
-#define max(a,b) \
-  ({ __typeof__ (a) _a = (a); \
-      __typeof__ (b) _b = (b); \
-    _a > _b ? _a : _b; })
+#define max(a,b) (a)<(b)?(b):(a)
 
 //Globals
 int terminal_width=80;
