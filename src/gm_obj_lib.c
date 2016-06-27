@@ -73,35 +73,35 @@ struct gm_object *object_from_file(char *file)
   xmlNode *cur_node = NULL;
   for (cur_node = object_element; cur_node; cur_node = xmlNextElementSibling(cur_node))
   {
-    if (strcmp(cur_node->name, "spriteName")==0)
+    if (strcmp( (char *) cur_node->name, "spriteName")==0)
     {
       object_to_return->spriteName = (char *)xmlNodeGetContent(cur_node);
     }
-    else if (strcmp(cur_node->name, "solid")==0)
+    else if (strcmp((char *) cur_node->name, "solid")==0)
     {
       intnc(&object_to_return->solid, cur_node);
     }
-    else if (strcmp(cur_node->name, "visible")==0)
+    else if (strcmp((char *) cur_node->name, "visible")==0)
     {
       intnc(&object_to_return->visible, cur_node);
     }
-    else if (strcmp(cur_node->name, "depth")==0)
+    else if (strcmp((char *) cur_node->name, "depth")==0)
     {
       intnc(&object_to_return->depth, cur_node);
     }
-    else if (strcmp(cur_node->name, "persistent")==0)
+    else if (strcmp((char *) cur_node->name, "persistent")==0)
     {
       intnc(&object_to_return->persistent, cur_node);
     }
-    else if (strcmp(cur_node->name, "maskName")==0)
+    else if (strcmp((char *) cur_node->name, "maskName")==0)
     {
       object_to_return->maskName = (char *)xmlNodeGetContent(cur_node);
     }
-    else if (strcmp(cur_node->name, "parentName")==0)
+    else if (strcmp((char *) cur_node->name, "parentName")==0)
     {
       object_to_return->parentName = (char *)xmlNodeGetContent(cur_node);
     }
-    else if (strcmp(cur_node->name, "events")==0)
+    else if (strcmp((char *) cur_node->name, "events")==0)
     {
       object_to_return->event_count = xmlChildElementCount(cur_node);
       object_to_return->events = calloc(object_to_return->event_count,sizeof(struct gm_event));
@@ -128,55 +128,55 @@ struct gm_object *object_from_file(char *file)
                 action_property_node;
                 action_property_node=xmlNextElementSibling(action_property_node))
               {
-                if (strcmp(action_property_node->name, "libid")==0)
+                if (strcmp((char *) action_property_node->name, "libid")==0)
                 {
                   intnc(&curr_action->libid, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "id")==0)
+                else if (strcmp((char *) action_property_node->name, "id")==0)
                 {
                   intnc(&curr_action->id, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "kind")==0)
+                else if (strcmp((char *) action_property_node->name, "kind")==0)
                 {
                   intnc(&curr_action->kind, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "userelative")==0)
+                else if (strcmp((char *) action_property_node->name, "userelative")==0)
                 {
                   intnc(&curr_action->userelative, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "useapplyto")==0)
+                else if (strcmp((char *) action_property_node->name, "useapplyto")==0)
                 {
                   intnc(&curr_action->useapplyto, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "isquestion")==0)
+                else if (strcmp((char *) action_property_node->name, "isquestion")==0)
                 {
                   intnc(&curr_action->isquestion, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "exetype")==0)
+                else if (strcmp((char *) action_property_node->name, "exetype")==0)
                 {
                   intnc(&curr_action->exetype, action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "functionname")==0)
+                else if (strcmp((char *) action_property_node->name, "functionname")==0)
                 {
                   curr_action->functionname = (char *)xmlNodeGetContent(action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "codestring")==0)
+                else if (strcmp((char *) action_property_node->name, "codestring")==0)
                 {
                   curr_action->codestring = (char *)xmlNodeGetContent(action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "whoName")==0)
+                else if (strcmp((char *) action_property_node->name, "whoName")==0)
                 {
                   curr_action->whoName = (char *)xmlNodeGetContent(action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "relative")==0)
+                else if (strcmp((char *) action_property_node->name, "relative")==0)
                 {
                   intnc(&curr_action->relative,action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "isnot")==0)
+                else if (strcmp((char *) action_property_node->name, "isnot")==0)
                 {
                   intnc(&curr_action->isnot,action_property_node);
                 }
-                else if (strcmp(action_property_node->name, "arguments")==0)
+                else if (strcmp((char *) action_property_node->name, "arguments")==0)
                 {
                   //arguments for the action
                   int iii;
@@ -189,21 +189,21 @@ struct gm_object *object_from_file(char *file)
                     xmlNode *arg_property_node;
                     for (arg_property_node=xmlFirstElementChild(arg_node);arg_property_node;arg_property_node=xmlNextElementSibling(arg_property_node))
                     {
-                      if (strcmp(arg_property_node->name,"kind")==0)
+                      if (strcmp((char *) arg_property_node->name,"kind")==0)
                       {
                         intnc(&curr_arg->kind, arg_property_node);
                       }
-                      else if ((strcmp(arg_property_node->name,"string")==0)|
-                        (strcmp(arg_property_node->name,"font")==0)|
-                        (strcmp(arg_property_node->name,"sprite")==0)|
-                        (strcmp(arg_property_node->name,"sprite")==0)|
-                        (strcmp(arg_property_node->name,"sound")==0)|
-                        (strcmp(arg_property_node->name,"background")==0)|
-                        (strcmp(arg_property_node->name,"path")==0)|
-                        (strcmp(arg_property_node->name,"script")==0)|
-                        (strcmp(arg_property_node->name,"object")==0)|
-                        (strcmp(arg_property_node->name,"room")==0)|
-                        (strcmp(arg_property_node->name,"timeline")==0))
+                      else if ((strcmp((char *) arg_property_node->name,"string")==0)|
+                        (strcmp((char *) arg_property_node->name,"font")==0)|
+                        (strcmp((char *) arg_property_node->name,"sprite")==0)|
+                        (strcmp((char *) arg_property_node->name,"sprite")==0)|
+                        (strcmp((char *) arg_property_node->name,"sound")==0)|
+                        (strcmp((char *) arg_property_node->name,"background")==0)|
+                        (strcmp((char *) arg_property_node->name,"path")==0)|
+                        (strcmp((char *) arg_property_node->name,"script")==0)|
+                        (strcmp((char *) arg_property_node->name,"object")==0)|
+                        (strcmp((char *) arg_property_node->name,"room")==0)|
+                        (strcmp((char *) arg_property_node->name,"timeline")==0))
                       {
                         curr_arg->string = (char *)xmlNodeGetContent(arg_property_node);
                       }
@@ -242,51 +242,51 @@ struct gm_object *object_from_file(char *file)
         event_node = xmlNextElementSibling(event_node); //Move to the next node
       }
     }
-    else if (strcmp(cur_node->name, "PhysicsObject")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObject")==0)
     {
       intnc(&object_to_return->PhysicsObject, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectSensor")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectSensor")==0)
     {
       intnc(&object_to_return->PhysicsObjectSensor, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectShape")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectShape")==0)
     {
       intnc(&object_to_return->PhysicsObjectShape, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectDensity")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectDensity")==0)
     {
       floatnc(&object_to_return->PhysicsObjectDensity, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectRestitution")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectRestitution")==0)
     {
       floatnc(&object_to_return->PhysicsObjectRestitution, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectGroup")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectGroup")==0)
     {
       intnc(&object_to_return->PhysicsObjectGroup, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectLinearDamping")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectLinearDamping")==0)
     {
       floatnc(&object_to_return->PhysicsObjectLinearDamping, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectAngularDamping")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectAngularDamping")==0)
     {
       floatnc(&object_to_return->PhysicsObjectAngularDamping, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectFriction")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectFriction")==0)
     {
       floatnc(&object_to_return->PhysicsObjectFriction, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectAwake")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectAwake")==0)
     {
       intnc(&object_to_return->PhysicsObjectAwake, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsObjectKinematic")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsObjectKinematic")==0)
     {
       intnc(&object_to_return->PhysicsObjectKinematic, cur_node);
     }
-    else if (strcmp(cur_node->name, "PhysicsShapePoints")==0)
+    else if (strcmp((char *) cur_node->name, "PhysicsShapePoints")==0)
     {
       //Parse points
       object_to_return->point_count = xmlChildElementCount(cur_node);
