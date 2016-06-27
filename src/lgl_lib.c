@@ -6,6 +6,15 @@
 struct lgl_action_meta *action_meta_dict=NULL; //The hashtable that holds all loaded
                                           //actions
 int lgl_action_count=0;
+int read_byte_prefix_str(FILE *file_stream, char **put_in)
+{
+  int string_len;
+  string_len=fgetc(file_stream)+1;
+  *put_in=malloc(string_len);
+  //Returns true if none of these are NULL
+  return fgets(*put_in,string_len,file_stream)&&put_in&&string_len;
+}
+
 int load_lgl(char *file_str)
 {
   unsigned int action_count;
@@ -52,9 +61,7 @@ int load_lgl(char *file_str)
         //2 Action Id
         curr_action->id=((int) fgetc(file_stream)) + ((int) fgetc(file_stream)<<8);
         //1 Length of Name { Name }
-        string_len=fgetc(file_stream);
-        curr_action->name=malloc(string_len+1);
-        fgets(curr_action->name,string_len+1,file_stream);
+        read_byte_prefix_str(file_stream, &curr_action->name);
         //(Skip) 1 Length of Description { Description }
         fseek(file_stream, fgetc(file_stream), SEEK_CUR);
         //1 Length of List Text { List Text }
@@ -106,23 +113,16 @@ int load_lgl(char *file_str)
         {
           struct lgl_argument_meta *curr_arg = (struct lgl_argument_meta*)malloc(sizeof(struct lgl_argument_meta));
           //1 Length of Argument Caption { Argument Caption }
-          string_len=fgetc(file_stream);
-          curr_arg->caption=malloc(string_len+1);
-          fgets(curr_arg->caption,string_len+1,file_stream);
+          read_byte_prefix_str(file_stream, &curr_arg->caption);
 
           //1 Argument Type[3] (0-15)
           curr_arg->kind=fgetc(file_stream);
 
           //1 Length of Default Argument Value { Default Argument Value }
-          string_len=fgetc(file_stream);
-          curr_arg->deflt=malloc(string_len+1);
-          fgets(curr_arg->deflt,string_len+1,file_stream);
+          read_byte_prefix_str(file_stream, &curr_arg->deflt);
 
           //1 Length of Menu { Menu }
-          string_len=fgetc(file_stream);
-          curr_arg->menu=malloc(string_len+1);
-          fgets(curr_arg->menu,string_len+1,file_stream);
-          curr_arg->menu[string_len]=0;
+          read_byte_prefix_str(file_stream, &curr_arg->menu);
 
           curr_action->arguments[ii]=curr_arg;
         }

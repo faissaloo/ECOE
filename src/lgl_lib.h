@@ -21,10 +21,10 @@ Font String= 15
 
 struct lgl_argument_meta
 {
-  unsigned char *caption; //Pointer for a malloc request for memory for a string
+  char *caption; //Pointer for a malloc request for memory for a string
   int kind;
-  unsigned char *deflt;
-  unsigned char *menu;
+  char *deflt;
+  char *menu;
 };
 
 /*Action Kinds:
@@ -44,7 +44,7 @@ struct lgl_argument_meta
 struct lgl_action_meta
 {
   //This is the informal name shown to the user
-  unsigned char *name; //Pointer for a malloc request for memory for a string
+  char *name; //Pointer for a malloc request for memory for a string
   int libid;
   int id;
   int kind;
@@ -53,8 +53,8 @@ struct lgl_action_meta
   int isquestion;
   int exetype;
   int interface; //0=Normal, 1=None, 2=Arrows, 5=Code, 6=Text
-  unsigned char *functionname; //Pointer for a malloc request for memory for a string
-  unsigned char *codestring; //Pointer for a malloc request for memory for a string
+  char *functionname; //Pointer for a malloc request for memory for a string
+  char *codestring; //Pointer for a malloc request for memory for a string
   //I won't implement these because they're useless for my use case, but in case
   //you want to:
   //char *desc; //Pointer for a malloc request for memory for a string
