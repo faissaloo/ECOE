@@ -54,8 +54,7 @@ int load_lgl(char *file_str)
         //1 Length of Name { Name }
         string_len=fgetc(file_stream);
         curr_action->name=malloc(string_len+1);
-        fread(curr_action->name,sizeof(char),string_len,file_stream);
-        curr_action->name[string_len]=0;
+        fgets(curr_action->name,string_len+1,file_stream);
         //(Skip) 1 Length of Description { Description }
         fseek(file_stream, fgetc(file_stream), SEEK_CUR);
         //1 Length of List Text { List Text }
@@ -81,16 +80,14 @@ int load_lgl(char *file_str)
         if (curr_action->exetype==1)
         {
           curr_action->functionname=malloc(string_len+1);
-          fread(curr_action->functionname,sizeof(char),string_len,file_stream);
-          curr_action->functionname[string_len]=0;
+          fgets(curr_action->functionname,string_len+1,file_stream);
           curr_action->codestring=calloc(1,sizeof(char));
         }
         //Execution Information contains Code
         else if (curr_action->exetype==2)
         {
           curr_action->codestring=malloc(string_len+1);
-          fread(curr_action->codestring,sizeof(char),string_len,file_stream);
-          curr_action->codestring[string_len]=0;
+          fgets(curr_action->codestring,string_len+1,file_stream);
           curr_action->functionname=calloc(1,sizeof(char));
         }
 
@@ -111,8 +108,7 @@ int load_lgl(char *file_str)
           //1 Length of Argument Caption { Argument Caption }
           string_len=fgetc(file_stream);
           curr_arg->caption=malloc(string_len+1);
-          fread(curr_arg->caption,sizeof(char),string_len,file_stream);
-          curr_arg->caption[string_len]=0;
+          fgets(curr_arg->caption,string_len+1,file_stream);
 
           //1 Argument Type[3] (0-15)
           curr_arg->kind=fgetc(file_stream);
@@ -120,13 +116,12 @@ int load_lgl(char *file_str)
           //1 Length of Default Argument Value { Default Argument Value }
           string_len=fgetc(file_stream);
           curr_arg->deflt=malloc(string_len+1);
-          fread(curr_arg->deflt,sizeof(char),string_len,file_stream);
-          curr_arg->deflt[string_len]=0;
+          fgets(curr_arg->deflt,string_len+1,file_stream);
 
           //1 Length of Menu { Menu }
           string_len=fgetc(file_stream);
           curr_arg->menu=malloc(string_len+1);
-          fread(curr_arg->menu,sizeof(char),string_len,file_stream);
+          fgets(curr_arg->menu,string_len+1,file_stream);
           curr_arg->menu[string_len]=0;
 
           curr_action->arguments[ii]=curr_arg;
