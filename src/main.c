@@ -764,7 +764,8 @@ int edit_action_menu(struct gm_action *selected_action)
           rewind(file_pointer);
           //Make sure there's enough space in the buffer
           selected_action->arguments[0]->string=realloc(selected_action->arguments[0]->string,size+1);
-          fgets(selected_action->arguments[0]->string, size+1, file_pointer);
+          fread(selected_action->arguments[0]->string,sizeof(char), size, file_pointer);
+          selected_action->arguments[0]->string[size]=0;
           fclose(file_pointer);
         }
       }
@@ -1181,7 +1182,10 @@ int main(int argc, char **argv)
   srand(time(NULL));
   //We're doing this rather than a simple "./lib" because "." gets the working
   //directory, not the directory of the executable file itself.
-  readlink("/proc/self/exe", lib_location, 256);
+  if (readlink("/proc/self/exe", lib_location, 256)==-1)
+  {
+    printf("[Error] Unable to get executable location, are you running something other than Linux?");
+  }
   dirname(lib_location);
   strcat(lib_location,"/lib/");
   load_lgl_dir(lib_location);

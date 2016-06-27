@@ -9,10 +9,11 @@ int lgl_action_count=0;
 int read_byte_prefix_str(FILE *file_stream, char **put_in)
 {
   int string_len;
-  string_len=fgetc(file_stream)+1;
-  *put_in=malloc(string_len);
+  string_len=fgetc(file_stream);
+  *put_in=malloc(string_len+1);
+  (*put_in)[string_len]=0;
   //Returns true if none of these are NULL
-  return fgets(*put_in,string_len,file_stream)&&put_in&&string_len;
+  return fread(*put_in,sizeof(char),string_len,file_stream)&&*put_in&&string_len;
 }
 
 int load_lgl(char *file_str)
@@ -87,14 +88,16 @@ int load_lgl(char *file_str)
         if (curr_action->exetype==1)
         {
           curr_action->functionname=malloc(string_len+1);
-          fgets(curr_action->functionname,string_len+1,file_stream);
+          fread(curr_action->functionname,sizeof(char),string_len,file_stream);
+          curr_action->functionname[string_len]=0;
           curr_action->codestring=calloc(1,sizeof(char));
         }
         //Execution Information contains Code
         else if (curr_action->exetype==2)
         {
           curr_action->codestring=malloc(string_len+1);
-          fgets(curr_action->codestring,string_len+1,file_stream);
+          fread(curr_action->codestring,sizeof(char),string_len,file_stream);
+          curr_action->codestring[string_len]=0;
           curr_action->functionname=calloc(1,sizeof(char));
         }
 
