@@ -44,7 +44,7 @@ void floatnc(float *float_ptr, xmlNode *node)
 
 struct gm_object *new_object()
 {
-  struct gm_object *object_to_return = (struct gm_object*)calloc(1,sizeof(struct gm_object));
+  struct gm_object *object_to_return = calloc(1,sizeof(struct gm_object));
   object_to_return->events = calloc(object_to_return->event_count,sizeof(struct gm_event));
   return object_to_return;
 }

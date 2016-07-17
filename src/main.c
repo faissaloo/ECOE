@@ -1279,39 +1279,40 @@ int main(int argc, char **argv)
           }
         }
       }
+      
+      //Move action
+      if (last_key==move_up_key)
+      {
+        section=2;
+        if (move_action(obj->events[selected_event], selected_action,selected_action+1))
+        {
+          selected_action++;
+          if ((selected_action>=(terminal_height-2)+action_scope)&
+            (action_scope<obj->events[selected_event]->action_count-(terminal_height-2))) //To stop it leaving an ugly trail of stuff
+          {
+            action_scope++;
+          }
+        }
+      }
+      else if (last_key==move_down_key)
+      {
+        section=2;
+        //Only move the selection if the move was successful
+        if (move_action(obj->events[selected_event], selected_action,selected_action-1))
+        {
+          selected_action--;
+          if (selected_action<action_scope)
+          {
+            action_scope--;
+          }
+        }
+      }
     }
 
     //Add action, make sure there are events to add the action to
     if ((last_key==create_new_action_key)&(selected_event<obj->event_count))
     {
       new_action_menu(obj, selected_event, selected_action, &section);
-    }
-    //Move action
-    if (last_key==move_up_key)
-    {
-      section=2;
-      if (move_action(obj->events[selected_event], selected_action,selected_action+1))
-      {
-        selected_action++;
-        if ((selected_action>=(terminal_height-2)+action_scope)&
-          (action_scope<obj->events[selected_event]->action_count-(terminal_height-2))) //To stop it leaving an ugly trail of stuff
-        {
-          action_scope++;
-        }
-      }
-    }
-    else if (last_key==move_down_key)
-    {
-      section=2;
-      //Only move the selection if the move was successful
-      if (move_action(obj->events[selected_event], selected_action,selected_action-1))
-      {
-        selected_action--;
-        if (selected_action<action_scope)
-        {
-          action_scope--;
-        }
-      }
     }
     //Add event
     if (last_key==create_new_event_key)
