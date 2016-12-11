@@ -26,7 +26,7 @@ char *step_event_type_name[3];
 char *draw_event_type_name[3];
 char *alarm_event_type_name[12];
 char *event_enumb_name[11];
-char *mouse_button_names[62];
+char *mouse_button_names[63];
 char *keys_names[124];
 //Converts the GMX draw event enumb to their index and back because GMX did some stupid stuff
 int event_draw_index_to_enumb_array[3]={0,64,65};
