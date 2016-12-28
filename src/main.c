@@ -1423,7 +1423,7 @@ int main(int argc, char **argv)
       }
       attron(A_REVERSE);
     }
-    draw_bool(3+9+3,2,!obj->visible);
+    draw_bool(3+9+3,2,obj->visible);
     attroff(A_REVERSE);
     if ((v_option==5)&(section==0))
     {
