@@ -20,14 +20,276 @@
 //Globals
 int terminal_width=80;
 int terminal_height=44;
-char *event_type_name[11];
-char *other_event_type_name[71]; //For the events under 'other' aka eventtype 7
-char *step_event_type_name[3];
-char *draw_event_type_name[3];
+char *event_type_name[11]={  //For the events under 'other' aka eventtype 7
+	"☀  Create",
+	"♻  Destroy",
+	"⌛  Alarm",
+	"🚶  Step",
+	"↸  Collision",
+	"⌨  Key",
+	"┬⃣  Mouse",
+	"…  Other",
+	"✏  Draw",
+	"⌨  Pressed",
+	"⌨  Released"
+};
+char *other_event_type_name[71]={
+	"Outside Room",
+	"Intersect Boundary",
+	"Game Start",
+	"Game End",
+	"Room Start",
+	"Room End",
+	"Out of lives",
+	"Animation End",
+	"End of Path",
+	"Out of Health",
+	"User Defined 0",
+	"User Defined 1",
+	"User Defined 2",
+	"User Defined 3",
+	"User Defined 4",
+	"User Defined 5",
+	"User Defined 6",
+	"User Defined 7",
+	"User Defined 8",
+	"User Defined 9",
+	"User Defined 10",
+	"User Defined 11",
+	"User Defined 12",
+	"User Defined 13",
+	"User Defined 14",
+	"User Defined 15",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"Close Button",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"Outside View 0",
+	"Outside View 1",
+	"Outside View 2",
+	"Outside View 3",
+	"Outside View 4",
+	"Outside View 5",
+	"Outside View 6",
+	"Outside View 7",
+	NULL,
+	NULL,
+	"Boundary View 0",
+	"Boundary View 1",
+	"Boundary View 2",
+	"Boundary View 3",
+	"Boundary View 4",
+	"Boundary View 5",
+	"Boundary View 6",
+	"Boundary View 7",
+	NULL,
+	NULL,
+	"Image Loaded",
+	"Sound Loaded",
+	"HTTP",
+	"Dialog",
+	NULL,
+	NULL,
+	"IAP",
+	"Cloud",
+	"Networking",
+	"Steam",
+	"Social"
+};
+char *step_event_type_name[3]={
+	"Step",
+	"Pre-step",
+	"Post-step"
+};
+char *draw_event_type_name[3]={
+	"Draw",
+	"GUI",
+	"Resize"
+};
 char *alarm_event_type_name[12];
-char *event_enumb_name[11];
-char *mouse_button_names[63];
-char *keys_names[124];
+char *event_enumb_name[11]={
+	NULL,
+	NULL,
+	"Alarm number:", //note: >11 unsupported by other implementations of GMX
+	"Step type:",
+	"Object:",
+	"Key number:",
+	"Mouse button:",
+	"Other event:",
+	"Draw type:",
+	"Key number:",
+	"Key number:"
+};
+
+char *mouse_button_names[63]={
+	"Left",
+  "Right",
+  "Middle",
+  "None",
+  "Left Pressed",
+  "Right Pressed",
+  "Middle Pressed",
+  "Left Released",
+  "Right Released",
+  "Middle Released",
+  "Enters",
+  "Leaves",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+  "Gamepad 1 Left",
+  "Gamepad 1 Right",
+  "Gamepad 1 Up",
+  "Gamepad 1 Down",
+	NULL,
+  "Gamepad 1 Button 1",
+  "Gamepad 1 Button 2",
+  "Gamepad 1 Button 3",
+  "Gamepad 1 Button 4",
+  "Gamepad 1 Button 5",
+  "Gamepad 1 Button 6",
+  "Gamepad 1 Button 7",
+  "Gamepad 1 Button 8",
+	NULL,
+	NULL,
+  "Gamepad 2 Left",
+  "Gamepad 2 Right",
+  "Gamepad 2 Up",
+  "Gamepad 2 Down",
+	NULL,
+  "Gamepad 2 Button 1",
+  "Gamepad 2 Button 2",
+  "Gamepad 2 Button 3",
+  "Gamepad 2 Button 4",
+  "Gamepad 2 Button 5",
+  "Gamepad 2 Button 6",
+  "Gamepad 2 Button 7",
+  "Gamepad 2 Button 8",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+  "Global Left",
+  "Global Right",
+  "Global Middle",
+  "Global Left Pressed",
+  "Global Right Pressed",
+  "Global Middle Pressed",
+  "Global Left Released",
+  "Global Right Released",
+  "Global Middle Released",
+	NULL,
+	NULL,
+  "Wheel Up",
+  "Wheel Down"
+};
+//https://github.com/IsmAvatar/LateralGM/blob/220dc7da6dc358bde0d691f52100c852283831a3/org/lateralgm/resources/sub/Event.java
+char *keys_names[124]={
+	"No key",
+	"Any key",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"Enter",
+	NULL,
+	NULL,
+	"Shift",
+	"Control",
+	"Alt",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"Space",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"Left",
+	"Up",
+	"Right",
+	"Down",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"0",
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	"A",
+	"B",
+	"C",
+	"D",
+	"E",
+	"F",
+	"G",
+	"H",
+	"I",
+	"J",
+	"K",
+	"L",
+	"M",
+	"N",
+	"O",
+	"P",
+	"Q",
+	"R",
+	"S",
+	"T",
+	"U",
+	"V",
+	"W",
+	"X",
+	"Y",
+	"Z",
+};
 //Converts the GMX draw event enumb to their index and back because GMX did some stupid stuff
 int event_draw_index_to_enumb_array[3]={0,64,65};
 #define event_draw_index_to_enumb(a) event_draw_index_to_enumb_array[a]
@@ -47,249 +309,6 @@ int count_names(char *array[],int size)
   return total;
 }
 
-enum event_kind
-{
-  event_create = 0,
-  event_destroy = 1,
-  event_alarm = 2,
-  event_step = 3,
-  event_collision = 4,
-  event_key = 5,
-  event_mouse = 6,
-  event_other = 7,
-  event_draw = 8,
-  event_key_pressed = 9,
-  event_key_released = 10,
-};
-//All the arg kinds
-enum arg_kind
-{
-  arg_expression = 0,
-  arg_string = 1,
-  arg_both = 2,
-  arg_boolean = 3,
-  arg_menu = 4,
-  arg_sprite = 5,
-  arg_sound = 6,
-  arg_background = 7,
-  arg_path = 8,
-  arg_script = 9,
-  arg_object = 10,
-  arg_room = 11,
-  arg_font = 12,
-  arg_color = 13,
-  arg_timeline = 14,
-  arg_font_str = 15,
-};
-
-//All the action kinds
-enum action_kind
-{
-  action_normal = 0,
-  action_group_start = 1,
-  action_group_end = 2,
-  action_else = 3,
-  action_exit = 4,
-  action_repeat = 5,
-  action_var = 6,
-  action_code = 7,
-  action_placeholder = 8,
-  action_seperator = 9,
-  action_label = 10,
-};
-
-//To initialise all the names+icons we'll use
-void init_names()
-{
-  //Informal type names
-  event_type_name[event_create] =  "☀  Create";
-  event_type_name[event_destroy] =  "♻  Destroy";
-  event_type_name[event_alarm] =  "⌛  Alarm";
-  event_type_name[event_step] =  "🚶  Step";
-  event_type_name[event_collision] =  "↸  Collision";
-  event_type_name[event_key] =  "⌨  Key";
-  event_type_name[event_mouse] =  "┬⃣  Mouse";
-  event_type_name[event_other] =  "…  Other";
-  event_type_name[event_draw] =  "✏  Draw";
-  event_type_name[event_key_pressed] =  "⌨  Pressed";
-  event_type_name[event_key_released] = "⌨  Released";
-  //Informal enumb names
-  event_enumb_name[event_create] =  NULL;
-  event_enumb_name[event_destroy] =  NULL;
-  event_enumb_name[event_alarm] =  "Alarm number:"; //note: >11 unsupported by many implementations, put this in documentation
-  event_enumb_name[event_step] =  "Step type:";
-  event_enumb_name[event_collision] =  "Object:";
-  event_enumb_name[event_key] =  "Key number:";
-  event_enumb_name[event_mouse] =  "Mouse button:";
-  event_enumb_name[event_other] =  "Other event:";
-  event_enumb_name[event_draw] =  "Draw type:";
-  event_enumb_name[event_key_pressed] =  "Key number:";
-  event_enumb_name[event_key_released] = "Key number:";
-  //Informal enumb names for other aka [7]
-  other_event_type_name[0] = "Outside Room";
-  other_event_type_name[1] = "Intersect Boundary";
-  other_event_type_name[2] = "Game Start";
-  other_event_type_name[3] = "Game End";
-  other_event_type_name[4] = "Room Start";
-  other_event_type_name[5] = "Room End";
-  other_event_type_name[6] = "Out of lives";
-  other_event_type_name[7] = "Animation End";
-  other_event_type_name[8] = "End of Path";
-  other_event_type_name[9] = "Out of Health";
-  other_event_type_name[10] = "User Defined 0";
-  other_event_type_name[11] = "User Defined 1";
-  other_event_type_name[12] = "User Defined 2";
-  other_event_type_name[13] = "User Defined 3";
-  other_event_type_name[14] = "User Defined 4";
-  other_event_type_name[15] = "User Defined 5";
-  other_event_type_name[16] = "User Defined 6";
-  other_event_type_name[17] = "User Defined 7";
-  other_event_type_name[18] = "User Defined 8";
-  other_event_type_name[19] = "User Defined 9";
-  other_event_type_name[20] = "User Defined 10";
-  other_event_type_name[21] = "User Defined 11";
-  other_event_type_name[22] = "User Defined 12";
-  other_event_type_name[23] = "User Defined 13";
-  other_event_type_name[24] = "User Defined 14";
-  other_event_type_name[25] = "User Defined 15";
-  //They skip to 30 here
-  other_event_type_name[30] = "Close Button";
-  //Then to 40
-  other_event_type_name[40] = "Outside View 0";
-  other_event_type_name[41] = "Outside View 1";
-  other_event_type_name[42] = "Outside View 2";
-  other_event_type_name[43] = "Outside View 3";
-  other_event_type_name[44] = "Outside View 4";
-  other_event_type_name[46] = "Outside View 5";
-  other_event_type_name[47] = "Outside View 6";
-  other_event_type_name[48] = "Outside View 7";
-  //Skips to 50 here
-  other_event_type_name[50] = "Boundary View 0";
-  other_event_type_name[51] = "Boundary View 1";
-  other_event_type_name[52] = "Boundary View 2";
-  other_event_type_name[53] = "Boundary View 3";
-  other_event_type_name[54] = "Boundary View 4";
-  other_event_type_name[55] = "Boundary View 5";
-  other_event_type_name[56] = "Boundary View 6";
-  other_event_type_name[57] = "Boundary View 7";
-  //Skips to 60 here
-  other_event_type_name[60] = "Image Loaded";
-  other_event_type_name[61] = "Sound Loaded";
-  other_event_type_name[62] = "HTTP";
-  other_event_type_name[63] = "Dialog";
-  //Skips, probably because yoyo decided to throw the new draw events in 64 and 65
-  other_event_type_name[66] = "IAP";
-  other_event_type_name[67] = "Cloud";
-  other_event_type_name[68] = "Networking";
-  other_event_type_name[69] = "Steam";
-  other_event_type_name[70] = "Social";
-  //Step event Types
-  step_event_type_name[0] = "Step";
-  step_event_type_name[1] = "Pre-step";
-  step_event_type_name[2] = "Post-step";
-  //Draw event Types
-  draw_event_type_name[0] = "Draw";
-  //Because we put them in the other_event_type_name array
-  draw_event_type_name[1] = "GUI"; //In the GMX format this is enumb 64 of draw
-  draw_event_type_name[2] = "Resize"; //In the GMX format this is enumb 65 of draw
-  //Mouse event types
-  mouse_button_names[0] = "Left";
-  mouse_button_names[1] = "Right";
-  mouse_button_names[2] = "Middle";
-  mouse_button_names[3] = "None";
-  mouse_button_names[4] = "Left Pressed";
-  mouse_button_names[5] = "Right Pressed";
-  mouse_button_names[6] = "Middle Pressed";
-  mouse_button_names[7] = "Left Released";
-  mouse_button_names[8] = "Right Released";
-  mouse_button_names[9] = "Middle Released";
-  mouse_button_names[10] = "Enters";
-  mouse_button_names[11] = "Leaves";
-  mouse_button_names[16] = "Gamepad 1 Left";
-  mouse_button_names[17] = "Gamepad 1 Right";
-  mouse_button_names[18] = "Gamepad 1 Up";
-  mouse_button_names[19] = "Gamepad 1 Down";
-  mouse_button_names[21] = "Gamepad 1 Button 1";
-  mouse_button_names[22] = "Gamepad 1 Button 2";
-  mouse_button_names[23] = "Gamepad 1 Button 3";
-  mouse_button_names[24] = "Gamepad 1 Button 4";
-  mouse_button_names[25] = "Gamepad 1 Button 5";
-  mouse_button_names[26] = "Gamepad 1 Button 6";
-  mouse_button_names[27] = "Gamepad 1 Button 7";
-  mouse_button_names[28] = "Gamepad 1 Button 8";
-  mouse_button_names[31] = "Gamepad 2 Left";
-  mouse_button_names[32] = "Gamepad 2 Right";
-  mouse_button_names[33] = "Gamepad 2 Up";
-  mouse_button_names[34] = "Gamepad 2 Down";
-  mouse_button_names[36] = "Gamepad 2 Button 1";
-  mouse_button_names[37] = "Gamepad 2 Button 2";
-  mouse_button_names[38] = "Gamepad 2 Button 3";
-  mouse_button_names[39] = "Gamepad 2 Button 4";
-  mouse_button_names[40] = "Gamepad 2 Button 5";
-  mouse_button_names[41] = "Gamepad 2 Button 6";
-  mouse_button_names[42] = "Gamepad 2 Button 7";
-  mouse_button_names[43] = "Gamepad 2 Button 8";
-  mouse_button_names[50] = "Global Left";
-  mouse_button_names[51] = "Global Right";
-  mouse_button_names[52] = "Global Middle";
-  mouse_button_names[53] = "Global Left Pressed";
-  mouse_button_names[54] = "Global Right Pressed";
-  mouse_button_names[55] = "Global Middle Pressed";
-  mouse_button_names[56] = "Global Left Released";
-  mouse_button_names[57] = "Global Right Released";
-  mouse_button_names[58] = "Global Middle Released";
-  mouse_button_names[61] = "Wheel Up";
-  mouse_button_names[62] = "Wheel Down";
-  //Keys event types
-  //https://github.com/IsmAvatar/LateralGM/blob/220dc7da6dc358bde0d691f52100c852283831a3/org/lateralgm/resources/sub/Event.java
-  keys_names[0] = "No key";
-  keys_names[1] = "Any key";
-  keys_names[13] = "Enter";
-  keys_names[16] = "Shift";
-  keys_names[17] = "Control";
-  keys_names[18] = "Alt";
-  keys_names[32] = "Space";
-  keys_names[37] = "Left";
-  keys_names[38] = "Up";
-  keys_names[39] = "Right";
-  keys_names[40] = "Down";
-  keys_names[48] = "0";
-  keys_names[49] = "1";
-  keys_names[50] = "2";
-  keys_names[51] = "3";
-  keys_names[52] = "4";
-  keys_names[53] = "5";
-  keys_names[54] = "6";
-  keys_names[55] = "7";
-  keys_names[56] = "8";
-  keys_names[57] = "9";
-  keys_names[65] = "A";
-  keys_names[66] = "B";
-  keys_names[67] = "C";
-  keys_names[68] = "D";
-  keys_names[69] = "E";
-  keys_names[70] = "F";
-  keys_names[71] = "G";
-  keys_names[72] = "H";
-  keys_names[73] = "I";
-  keys_names[74] = "J";
-  keys_names[75] = "K";
-  keys_names[76] = "L";
-  keys_names[77] = "M";
-  keys_names[78] = "N";
-  keys_names[79] = "O";
-  keys_names[80] = "P";
-  keys_names[81] = "Q";
-  keys_names[82] = "R";
-  keys_names[83] = "S";
-  keys_names[84] = "T";
-  keys_names[85] = "U";
-  keys_names[86] = "V";
-  keys_names[87] = "W";
-  keys_names[88] = "X";
-  keys_names[89] = "Y";
-  keys_names[90] = "Z";
-}
 //Converts an argument kind to a textbox character entry limit
 int arg_to_textbox_limit[16]={0,0,0,0,0,1,1,1,1,1,1,1,1,2,1,1};
 //From: https://stackoverflow.com/questions/1306727/way-to-get-number-of-digits-in-an-int
@@ -627,25 +646,25 @@ int edit_event_menu(struct gm_event *event)
     {
       switch (event->eventtype)
       {
-        case event_step:
+        case EV_STEP:
           choice_array=step_event_type_name;
           array_range=sizeof(step_event_type_name) / sizeof(step_event_type_name[0]);
           break;
-        case event_key:
-        case event_key_pressed:
-        case event_key_released:
+        case EV_KEY:
+        case EV_KEY_PRESS:
+        case EV_KEY_RELEASE:
           choice_array=keys_names;
           array_range=sizeof(keys_names) / sizeof(keys_names[0]);
           break;
-        case event_mouse:
+        case EV_MOUSE:
           choice_array=mouse_button_names;
           array_range=sizeof(mouse_button_names) / sizeof(mouse_button_names[0]);
           break;
-        case event_other:
+        case EV_OTHER:
           choice_array=other_event_type_name;
           array_range=sizeof(other_event_type_name) / sizeof(other_event_type_name[0]);
           break;
-        case event_draw:
+        case EV_DRAW:
           choice_array=draw_event_type_name;
           array_range=sizeof(draw_event_type_name) / sizeof(draw_event_type_name[0]);
           break;
@@ -675,7 +694,7 @@ int edit_event_menu(struct gm_event *event)
       }
       if (last_key=='\n')
       {
-        if (event->eventtype==event_draw)
+        if (event->eventtype==EV_DRAW)
         {
           event->enumb=event_draw_index_to_enumb(array_index);
         }
@@ -685,7 +704,7 @@ int edit_event_menu(struct gm_event *event)
         }
       }
     }
-    else if (event->eventtype==event_collision)
+    else if (event->eventtype==EV_COLLISION)
     {
       while (last_key!=27)
       {
@@ -725,7 +744,7 @@ int edit_action_menu(struct gm_action *selected_action)
   if (curr_action_meta!=NULL)
   {
     //If it's only code we want it to open in our favourite code editor
-    if (curr_action_meta->kind==action_code)
+    if (curr_action_meta->kind==ACT_CODE)
     {
       char *temp_file_name;
       char *command;
@@ -929,7 +948,7 @@ int new_action_menu(struct gm_object *obj, int selected_event, int selected_acti
     last_key=getch();
   }
   action_to_add_meta=*get_action_meta(selected_id);
-  if ((last_key=='\n')&(action_to_add_meta.kind!=action_seperator)&(action_to_add_meta.kind!=action_label))
+  if ((last_key=='\n')&(action_to_add_meta.kind!=ACT_SEPERATOR)&(action_to_add_meta.kind!=ACT_LABEL))
   {
     //Make space in the array for the new action, selected_action++
     new_action(obj->events[selected_event], selected_action);
@@ -1001,31 +1020,31 @@ void draw_events_and_actions(struct gm_object *obj, int event_scope, int action_
 
     switch (obj->events[i]->eventtype)
     {
-      case event_alarm:
+      case EV_ALARM:
         mvprintw((i-event_scope)+2,19,"│⌛  Alarm  %i",obj->events[i]->enumb);
         break;
-      case event_step:
+      case EV_STEP:
         mvprintw((i-event_scope)+2, 19,"│🚶  %s",step_event_type_name[obj->events[i]->enumb]);
         break;
-      case event_collision:
+      case EV_COLLISION:
         mvprintw((i-event_scope)+2, 19,"│↸  %.18s",obj->events[i]->ename);
         break;
-      case event_key:
+      case EV_KEY:
         mvprintw((i-event_scope)+2, 19,"│️ ⃣️  %s", keys_names[obj->events[i]->enumb]);
         break;
-      case event_mouse:
+      case EV_MOUSE:
         mvprintw((i-event_scope)+2, 19,"│️┬⃣️  %s", mouse_button_names[obj->events[i]->enumb]);
         break;
-      case event_other:
+      case EV_OTHER:
         mvprintw((i-event_scope)+2, 19,"│…  %s",other_event_type_name[obj->events[i]->enumb]);
         break;
-      case event_draw:
+      case EV_DRAW:
         mvprintw((i-event_scope)+2, 19,"│️✏  %s", draw_event_type_name[event_draw_enumb_to_index(obj->events[i]->enumb)]);
         break;
-      case event_key_pressed:
+      case EV_KEY_PRESS:
         mvprintw((i-event_scope)+2, 19,"│️⬇️⃣️  %s", keys_names[obj->events[i]->enumb]);
         break;
-      case event_key_released:
+      case EV_KEY_RELEASE:
         mvprintw((i-event_scope)+2, 19,"│️⬆️⃣️  %s", keys_names[obj->events[i]->enumb]);
         break;
       default:
@@ -1176,7 +1195,6 @@ int main(int argc, char **argv)
   char lib_location[256]="./lib/";
   int i;
   int ii;
-  init_names();
   //We don't use any function keys, so don't bother with escape delay
   ESCDELAY=0;
   srand(time(NULL));
@@ -1279,7 +1297,7 @@ int main(int argc, char **argv)
           }
         }
       }
-      
+
       //Move action
       if (last_key==move_up_key)
       {

@@ -497,45 +497,38 @@ int save_obj(struct gm_object *obj, char *file_str)
 			{
 				xmlTextWriterStartElement(writer, BAD_CAST "argument");
 				xmlTextWriterWriteFormatElement(writer, BAD_CAST "kind", "%i", obj->events[i]->actions[ii]->arguments[iii]->kind);
-				if (obj->events[i]->actions[ii]->arguments[iii]->kind==5)
+				switch (obj->events[i]->actions[ii]->arguments[iii]->kind)
 				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "sprite", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==6)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "sound", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==7)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "background", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==8)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "path", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==9)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "script", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==10)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "object", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==11)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "room", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==12)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "font", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else if (obj->events[i]->actions[ii]->arguments[iii]->kind==14)
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "timeline", obj->events[i]->actions[ii]->arguments[iii]->string);
-				}
-				else
-				{
-					xmlTextWriterWriteElement(writer, BAD_CAST "string", obj->events[i]->actions[ii]->arguments[iii]->string);
+					case ARG_SPRITE:
+						xmlTextWriterWriteElement(writer, BAD_CAST "sprite", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_SOUND:
+						xmlTextWriterWriteElement(writer, BAD_CAST "sound", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_BACKGROUND:
+						xmlTextWriterWriteElement(writer, BAD_CAST "background", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_PATH:
+						xmlTextWriterWriteElement(writer, BAD_CAST "path", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_SCRIPT:
+						xmlTextWriterWriteElement(writer, BAD_CAST "script", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_OBJECT:
+						xmlTextWriterWriteElement(writer, BAD_CAST "object", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_ROOM:
+						xmlTextWriterWriteElement(writer, BAD_CAST "room", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_FONT:
+						xmlTextWriterWriteElement(writer, BAD_CAST "font", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					case ARG_TIMELINE:
+						xmlTextWriterWriteElement(writer, BAD_CAST "timeline", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
+					default:
+						xmlTextWriterWriteElement(writer, BAD_CAST "string", obj->events[i]->actions[ii]->arguments[iii]->string);
+						break;
 				}
 				xmlTextWriterEndElement(writer); //Close <argument>
 			}
