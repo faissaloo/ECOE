@@ -8,6 +8,67 @@
 #include "gm_obj_lib.h"
 #define max(a,b) (a)<(b)?(b):(a)
 
+//Precomputed hashes
+#define H_spriteName 48859
+#define H_solid 1358
+#define H_visible 5613
+#define H_depth 1064
+#define H_persistent 43084
+#define H_maskName 9563
+#define H_parentName 43147
+#define H_events 2507
+#define H_PhysicsObject 3062
+#define H_PhysicsObjectSensor 62368
+#define H_PhysicsObjectShape 31153
+#define H_PhysicsObjectDensity 58093
+#define H_PhysicsObjectRestitution 27172
+#define H_PhysicsObjectGroup 30726
+#define H_PhysicsObjectLinearDamping 31599
+#define H_PhysicsObjectAngularDamping 13679
+#define H_PhysicsObjectFriction 49188
+#define H_PhysicsObjectAwake 30815
+#define H_PhysicsObjectKinematic 32793
+#define H_PhysicsShapePoints 6875
+#define H_libid 1206
+#define H_id 182
+#define H_kind 580
+#define H_userelative 32349
+#define H_useapplyto 47299
+#define H_isquestion 36324
+#define H_exetype 4817
+#define H_functionname 29195
+#define H_codestring 35311
+#define H_whoName 5499
+#define H_relative 10589
+#define H_isnot 1050
+#define H_arguments 19387
+#define H_string 2991
+#define H_font 548
+#define H_sprite 3033
+#define H_sound 1316
+#define H_background 34708
+#define H_path 644
+#define H_script 2800
+#define H_object 2486
+#define H_room 671
+#define H_timeline 10701
+#define H_x 120
+#define H_y 121
+
+//Perfect hash function for tag names
+int hash_tag(char *str)
+{
+	int result;
+	result=0;
+	while (*str!='\0')
+	{
+		result<<=1;
+		result^=*str;
+		str++;
+	}
+	return result;
+}
+
 //intnc (int from node content)
 int intnc(int *int_ptr, xmlNode *node)
 {
@@ -51,6 +112,11 @@ struct gm_object *new_object()
 //Opens a .object.gmx file and turns it into a tree of structs
 struct gm_object *object_from_file(char *file)
 {
+  //Iterator vars
+  int i;
+  int ii;
+  int iii;
+
   char *curr_ename;
   char *curr_enumb;
   char *curr_eventtype;
@@ -70,239 +136,240 @@ struct gm_object *object_from_file(char *file)
   xmlNode *cur_node = NULL;
   for (cur_node = object_element; cur_node; cur_node = xmlNextElementSibling(cur_node))
   {
-    if (strcmp( (char *) cur_node->name, "spriteName")==0)
-    {
-      object_to_return->spriteName = (char *)xmlNodeGetContent(cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "solid")==0)
-    {
-      intnc(&object_to_return->solid, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "visible")==0)
-    {
-      intnc(&object_to_return->visible, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "depth")==0)
-    {
-      intnc(&object_to_return->depth, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "persistent")==0)
-    {
-      intnc(&object_to_return->persistent, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "maskName")==0)
-    {
-      object_to_return->maskName = (char *)xmlNodeGetContent(cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "parentName")==0)
-    {
-      object_to_return->parentName = (char *)xmlNodeGetContent(cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "events")==0)
-    {
-      object_to_return->event_count = xmlChildElementCount(cur_node);
-      object_to_return->events = calloc(object_to_return->event_count,sizeof(struct gm_event));
+		switch (hash_tag((char *)cur_node->name))
+		{
+			case H_spriteName:
+				object_to_return->spriteName = (char *)xmlNodeGetContent(cur_node);
+				break;
 
-      int i;
-      xmlNode *event_node = xmlFirstElementChild(cur_node);
-      for (i=0;i<(object_to_return->event_count);i++)
-      {
-        if (event_node->type == XML_ELEMENT_NODE)
-        {
-          struct gm_event *curr_event = (struct gm_event*)calloc(1,sizeof(struct gm_event));
-          //Put all the actions in the event before saving to the event
-          int ii;
-          curr_event->action_count = xmlChildElementCount(event_node);
-          xmlNode *action_node = xmlFirstElementChild(event_node);
-          curr_event->actions = calloc(curr_event->action_count,sizeof(struct gm_action));
-          for (ii=0;ii<(curr_event->action_count);ii++)
-          {
-            if (action_node->type == XML_ELEMENT_NODE)
-            {
-              struct gm_action *curr_action = calloc(1,sizeof(struct gm_action));
-              xmlNode *action_property_node;
-              for (action_property_node=xmlFirstElementChild(action_node);
-                action_property_node;
-                action_property_node=xmlNextElementSibling(action_property_node))
-              {
-                if (strcmp((char *) action_property_node->name, "libid")==0)
-                {
-                  intnc(&curr_action->libid, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "id")==0)
-                {
-                  intnc(&curr_action->id, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "kind")==0)
-                {
-                  intnc(&curr_action->kind, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "userelative")==0)
-                {
-                  intnc(&curr_action->userelative, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "useapplyto")==0)
-                {
-                  intnc(&curr_action->useapplyto, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "isquestion")==0)
-                {
-                  intnc(&curr_action->isquestion, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "exetype")==0)
-                {
-                  intnc(&curr_action->exetype, action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "functionname")==0)
-                {
-                  curr_action->functionname = (char *)xmlNodeGetContent(action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "codestring")==0)
-                {
-                  curr_action->codestring = (char *)xmlNodeGetContent(action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "whoName")==0)
-                {
-                  curr_action->whoName = (char *)xmlNodeGetContent(action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "relative")==0)
-                {
-                  intnc(&curr_action->relative,action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "isnot")==0)
-                {
-                  intnc(&curr_action->isnot,action_property_node);
-                }
-                else if (strcmp((char *) action_property_node->name, "arguments")==0)
-                {
-                  //arguments for the action
-                  int iii;
-                  curr_action->arg_count = xmlChildElementCount(action_property_node);
-                  xmlNode *arg_node = xmlFirstElementChild(action_property_node);
-                  curr_action->arguments = calloc(curr_action->arg_count, sizeof(struct gm_argument));
-                  for (iii=0;iii<(curr_action->arg_count);iii++)
-                  {
-                    struct gm_argument *curr_arg = calloc(1,sizeof(struct gm_argument));
-                    xmlNode *arg_property_node;
-                    for (arg_property_node=xmlFirstElementChild(arg_node);arg_property_node;arg_property_node=xmlNextElementSibling(arg_property_node))
-                    {
-                      if (strcmp((char *) arg_property_node->name,"kind")==0)
-                      {
-                        intnc(&curr_arg->kind, arg_property_node);
-                      }
-                      else if ((strcmp((char *) arg_property_node->name,"string")==0)|
-                        (strcmp((char *) arg_property_node->name,"font")==0)|
-                        (strcmp((char *) arg_property_node->name,"sprite")==0)|
-                        (strcmp((char *) arg_property_node->name,"sprite")==0)|
-                        (strcmp((char *) arg_property_node->name,"sound")==0)|
-                        (strcmp((char *) arg_property_node->name,"background")==0)|
-                        (strcmp((char *) arg_property_node->name,"path")==0)|
-                        (strcmp((char *) arg_property_node->name,"script")==0)|
-                        (strcmp((char *) arg_property_node->name,"object")==0)|
-                        (strcmp((char *) arg_property_node->name,"room")==0)|
-                        (strcmp((char *) arg_property_node->name,"timeline")==0))
-                      {
-                        curr_arg->string = (char *)xmlNodeGetContent(arg_property_node);
-                      }
-                    }
-                    arg_node = xmlNextElementSibling(arg_node);
-                    curr_action->arguments[iii]=curr_arg;
-                  }
-                }
-                curr_event->actions[ii]=curr_action;
-              }
-            }
+			case H_solid:
+				intnc(&object_to_return->solid, cur_node);
+				break;
 
-            action_node = xmlNextElementSibling(action_node); //Move to the next node
-          }
+			case H_visible:
+				intnc(&object_to_return->visible, cur_node);
+				break;
 
-          curr_ename = (char *)xmlGetProp(event_node, "ename");
-          curr_enumb = (char *)xmlGetProp(event_node, "enumb");
-          if (curr_enumb!=NULL)
-          {
-            //enumb
-            curr_event->enumb = strtol(curr_enumb,0,10);
-          }
-          else if (curr_ename!=NULL)
-          {
-            //enumb
-            curr_event->ename = curr_ename;
-          }
-          curr_eventtype = (char *)xmlGetProp(event_node, "eventtype");
-          //event type
-          curr_event->eventtype = strtol(curr_eventtype,0,10);
-          free(curr_eventtype);
-          free(curr_enumb);
+			case H_depth:
+				intnc(&object_to_return->depth, cur_node);
+				break;
 
-          object_to_return->events[i]=curr_event;
-        }
-        event_node = xmlNextElementSibling(event_node); //Move to the next node
-      }
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObject")==0)
-    {
-      intnc(&object_to_return->PhysicsObject, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectSensor")==0)
-    {
-      intnc(&object_to_return->PhysicsObjectSensor, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectShape")==0)
-    {
-      intnc(&object_to_return->PhysicsObjectShape, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectDensity")==0)
-    {
-      floatnc(&object_to_return->PhysicsObjectDensity, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectRestitution")==0)
-    {
-      floatnc(&object_to_return->PhysicsObjectRestitution, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectGroup")==0)
-    {
-      intnc(&object_to_return->PhysicsObjectGroup, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectLinearDamping")==0)
-    {
-      floatnc(&object_to_return->PhysicsObjectLinearDamping, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectAngularDamping")==0)
-    {
-      floatnc(&object_to_return->PhysicsObjectAngularDamping, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectFriction")==0)
-    {
-      floatnc(&object_to_return->PhysicsObjectFriction, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectAwake")==0)
-    {
-      intnc(&object_to_return->PhysicsObjectAwake, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsObjectKinematic")==0)
-    {
-      intnc(&object_to_return->PhysicsObjectKinematic, cur_node);
-    }
-    else if (strcmp((char *) cur_node->name, "PhysicsShapePoints")==0)
-    {
-      //Parse points
-      object_to_return->point_count = xmlChildElementCount(cur_node);
-      object_to_return->PhysicsShapePoints = malloc(sizeof(struct gm_point*)*object_to_return->point_count);
-      xmlNode *point_node = xmlFirstElementChild(cur_node);
-      int i;
-      xmlChar *string_to_convert;
-      for (i=0;i<object_to_return->point_count;i++)
-      {
-          struct gm_point *curr_point = (struct gm_point*)calloc(1,sizeof(struct gm_point));
-          char *axis_str; //Either holds the x or the y
-          string_to_convert=xmlNodeGetContent(point_node);
-          curr_point->x = strtol(string_to_convert,&axis_str,10);
-          curr_point->y = strtol(++axis_str,NULL,10);
-          free(string_to_convert);
-          point_node = xmlNextElementSibling(point_node);
-          object_to_return->PhysicsShapePoints[i]=curr_point;
-      }
-    }
+			case H_persistent:
+				intnc(&object_to_return->persistent, cur_node);
+				break;
+
+			case H_maskName:
+				object_to_return->maskName = (char *)xmlNodeGetContent(cur_node);
+				break;
+
+			case H_parentName:
+				object_to_return->parentName = (char *)xmlNodeGetContent(cur_node);
+				break;
+
+			case H_events:
+				object_to_return->event_count = xmlChildElementCount(cur_node);
+	      object_to_return->events = calloc(object_to_return->event_count,sizeof(struct gm_event));
+
+	      xmlNode *event_node = xmlFirstElementChild(cur_node);
+	      for (i=0;i<(object_to_return->event_count);i++)
+	      {
+	        if (event_node->type == XML_ELEMENT_NODE)
+	        {
+	          struct gm_event *curr_event = (struct gm_event*)calloc(1,sizeof(struct gm_event));
+	          //Put all the actions in the event before saving to the event
+	          curr_event->action_count = xmlChildElementCount(event_node);
+	          xmlNode *action_node = xmlFirstElementChild(event_node);
+	          curr_event->actions = calloc(curr_event->action_count,sizeof(struct gm_action));
+	          for (ii=0;ii<(curr_event->action_count);ii++)
+	          {
+	            if (action_node->type == XML_ELEMENT_NODE)
+	            {
+	              struct gm_action *curr_action = calloc(1,sizeof(struct gm_action));
+	              xmlNode *action_property_node;
+	              for (action_property_node=xmlFirstElementChild(action_node);
+	                action_property_node;
+	                action_property_node=xmlNextElementSibling(action_property_node))
+	              {
+									switch (hash_tag((char *) action_property_node->name))
+									{
+										case H_libid:
+											intnc(&curr_action->libid, action_property_node);
+											break;
+
+										case H_id:
+											intnc(&curr_action->id, action_property_node);
+											break;
+
+										case H_kind:
+											intnc(&curr_action->kind, action_property_node);
+											break;
+
+										case H_userelative:
+											intnc(&curr_action->userelative, action_property_node);
+											break;
+
+										case H_useapplyto:
+											intnc(&curr_action->useapplyto, action_property_node);
+											break;
+
+										case H_isquestion:
+											intnc(&curr_action->isquestion, action_property_node);
+											break;
+
+										case H_exetype:
+											intnc(&curr_action->exetype, action_property_node);
+											break;
+
+										case H_functionname:
+											curr_action->functionname = (char *)xmlNodeGetContent(action_property_node);
+											break;
+
+										case H_codestring:
+											curr_action->codestring = (char *)xmlNodeGetContent(action_property_node);
+											break;
+
+										case H_whoName:
+											curr_action->whoName = (char *)xmlNodeGetContent(action_property_node);
+											break;
+
+										case H_relative:
+											intnc(&curr_action->relative,action_property_node);
+											break;
+
+										case H_isnot:
+											intnc(&curr_action->isnot,action_property_node);
+											break;
+
+										case H_arguments:
+											//arguments for the action
+											curr_action->arg_count = xmlChildElementCount(action_property_node);
+											xmlNode *arg_node = xmlFirstElementChild(action_property_node);
+											curr_action->arguments = calloc(curr_action->arg_count, sizeof(struct gm_argument));
+											for (iii=0;iii<(curr_action->arg_count);iii++)
+											{
+												struct gm_argument *curr_arg = calloc(1,sizeof(struct gm_argument));
+												xmlNode *arg_property_node;
+												for (arg_property_node=xmlFirstElementChild(arg_node);arg_property_node;arg_property_node=xmlNextElementSibling(arg_property_node))
+												{
+													switch (hash_tag((char *) arg_property_node->name))
+													{
+														case H_kind:
+															intnc(&curr_arg->kind, arg_property_node);
+															break;
+
+														case H_string:
+														case H_font:
+														case H_sprite:
+														case H_sound:
+														case H_background:
+														case H_path:
+														case H_script:
+														case H_object:
+														case H_room:
+														case H_timeline:
+															curr_arg->string = (char *)xmlNodeGetContent(arg_property_node);
+															break;
+													}
+												}
+												arg_node = xmlNextElementSibling(arg_node);
+												curr_action->arguments[iii]=curr_arg;
+											}
+											break;
+									}
+	                curr_event->actions[ii]=curr_action;
+	              }
+	            }
+
+	            action_node = xmlNextElementSibling(action_node); //Move to the next node
+	          }
+
+	          curr_ename = (char *)xmlGetProp(event_node, "ename");
+	          curr_enumb = (char *)xmlGetProp(event_node, "enumb");
+	          if (curr_enumb!=NULL)
+	          {
+	            //enumb
+	            curr_event->enumb = strtol(curr_enumb,0,10);
+	          }
+	          else if (curr_ename!=NULL)
+	          {
+	            //enumb
+	            curr_event->ename = curr_ename;
+	          }
+	          curr_eventtype = (char *)xmlGetProp(event_node, "eventtype");
+	          //event type
+	          curr_event->eventtype = strtol(curr_eventtype,0,10);
+	          free(curr_eventtype);
+	          free(curr_enumb);
+
+	          object_to_return->events[i]=curr_event;
+	        }
+	        event_node = xmlNextElementSibling(event_node); //Move to the next node
+	      }
+				break;
+
+			case H_PhysicsObject:
+				intnc(&object_to_return->PhysicsObject, cur_node);
+				break;
+
+			case H_PhysicsObjectSensor:
+				intnc(&object_to_return->PhysicsObjectSensor, cur_node);
+				break;
+
+			case H_PhysicsObjectShape:
+				intnc(&object_to_return->PhysicsObjectShape, cur_node);
+				break;
+
+			case H_PhysicsObjectDensity:
+				floatnc(&object_to_return->PhysicsObjectDensity, cur_node);
+				break;
+
+			case H_PhysicsObjectRestitution:
+				floatnc(&object_to_return->PhysicsObjectRestitution, cur_node);
+				break;
+
+			case H_PhysicsObjectGroup:
+				intnc(&object_to_return->PhysicsObjectGroup, cur_node);
+				break;
+
+			case H_PhysicsObjectLinearDamping:
+				floatnc(&object_to_return->PhysicsObjectLinearDamping, cur_node);
+				break;
+
+			case H_PhysicsObjectAngularDamping:
+				floatnc(&object_to_return->PhysicsObjectAngularDamping, cur_node);
+				break;
+
+			case H_PhysicsObjectFriction:
+				floatnc(&object_to_return->PhysicsObjectFriction, cur_node);
+				break;
+
+			case H_PhysicsObjectAwake:
+				intnc(&object_to_return->PhysicsObjectAwake, cur_node);
+				break;
+
+			case H_PhysicsObjectKinematic:
+				intnc(&object_to_return->PhysicsObjectKinematic, cur_node);
+				break;
+
+			case H_PhysicsShapePoints:
+				//Parse points
+	      object_to_return->point_count = xmlChildElementCount(cur_node);
+	      object_to_return->PhysicsShapePoints = malloc(sizeof(struct gm_point*)*object_to_return->point_count);
+	      xmlNode *point_node = xmlFirstElementChild(cur_node);
+	      xmlChar *string_to_convert;
+	      for (i=0;i<object_to_return->point_count;i++)
+	      {
+	          struct gm_point *curr_point = (struct gm_point*)calloc(1,sizeof(struct gm_point));
+	          char *axis_str; //Either holds the x or the y
+	          string_to_convert=xmlNodeGetContent(point_node);
+	          curr_point->x = strtol(string_to_convert,&axis_str,10);
+	          curr_point->y = strtol(++axis_str,NULL,10);
+	          free(string_to_convert);
+	          point_node = xmlNextElementSibling(point_node);
+	          object_to_return->PhysicsShapePoints[i]=curr_point;
+	      }
+				break;
+		}
   }
   /*free the document */
   xmlFreeDoc(doc);
